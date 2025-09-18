@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "evo_extras",
+  "version": "${version}",
+  "name": "Evo Extras",
+  "description": "client-side QoL mod for DiamondWorld Prison Evo",
+  "authors": [],
+  "contact": {},
+  "license": "All-Rights-Reserved",
+  "icon": "assets/evo_extras/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "fabric-datagen": [
+      "com.kapac6.evo_extras.client.Evo_extrasDataGenerator"
+    ],
+    "client": [
+      "com.kapac6.evo_extras.client.Evo_extrasClient"
+    ],
+    "main": [
+      "com.kapac6.evo_extras.Evo_extras"
+    ]
+  },
+  "mixins": [
+    "evo_extras.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
