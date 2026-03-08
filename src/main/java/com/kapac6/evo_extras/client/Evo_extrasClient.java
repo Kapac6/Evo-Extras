@@ -128,7 +128,7 @@ public class Evo_extrasClient implements ClientModInitializer {
         wBlockProfitPH = new WBlockProfitPH(
                 HudConfig.WidgetBphX,
                 HudConfig.WidgetBphY,
-                260, //190
+                230, //190
                 31,
                 null
         );

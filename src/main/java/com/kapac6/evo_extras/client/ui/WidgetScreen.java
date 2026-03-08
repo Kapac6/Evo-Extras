@@ -19,7 +19,7 @@ public class WidgetScreen extends Screen {
         wBlockProfitPH = new WBlockProfitPH(
                 HudConfig.WidgetBphX,
                 HudConfig.WidgetBphY,
-                260, 31, this
+                230, 31, this
         );
         this.addDrawableChild(wBlockProfitPH);
     }
