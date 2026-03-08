@@ -3,10 +3,7 @@ package com.kapac6.evo_extras.client.config;
 import com.kapac6.evo_extras.client.Evo_extrasClient;
 import com.kapac6.evo_extras.client.features.mine.blockPH.BlockProfitPerHour;
 import com.kapac6.evo_extras.client.ui.WidgetScreen;
-import com.teamresourceful.resourcefulconfig.api.annotations.Category;
-import com.teamresourceful.resourcefulconfig.api.annotations.ConfigButton;
-import com.teamresourceful.resourcefulconfig.api.annotations.ConfigEntry;
-import com.teamresourceful.resourcefulconfig.api.annotations.ConfigOption;
+import com.teamresourceful.resourcefulconfig.api.annotations.*;
 
 @Category("Шахта")
 public class ConfigMining {
@@ -14,6 +11,9 @@ public class ConfigMining {
     @ConfigOption.Separator(
             value = "Счетчик денег в час",
             description = "Считает примерное количество блоков/денег в час"
+    )
+    @Comment(
+            value = "§cСейчас работает только с /autosell"
     )
     @ConfigEntry(
             id = "bphWidgetToggle",
