@@ -1,0 +1,224 @@
+package com.kapac6.evo_extras.client.util;
+
+import com.kapac6.evo_extras.client.Evo_extrasClient;
+import com.kapac6.evo_extras.client.config.Config;
+import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.render.RenderLayer;
+import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class ContextBuilder {
+    private final List<WTexture> texturesList;
+    private final List<WText> textList;
+    private final int padding;
+    private int x;
+    private int y;
+    private final int width;
+    private final int height;
+    private final int scale;
+    private final boolean background;
+
+    //кеш)
+    private final String[] cachedLines;
+    private final int[] cachedColors;
+    private final Identifier[] cachedIcons;
+    private boolean needsTextUpdate = true;
+
+    ContextBuilder(Builder builder) {
+        this.texturesList = new ArrayList<>(builder.texturesList);
+        this.textList = new ArrayList<>(builder.textList);
+        this.padding = builder.padding;
+        this.x = builder.x;
+        this.y = builder.y;
+        this.width = builder.width;
+        this.height = builder.height;
+        this.scale = builder.scale;
+        this.background = builder.background;
+
+        this.cachedLines = new String[textList.size()];
+        this.cachedColors = new int[textList.size()];
+        this.cachedIcons = new Identifier[texturesList.size()];
+
+        for(int i = 0; i < textList.size(); i++) {
+            WText text = textList.get(i);
+            cachedLines[i] = text.getText().getString();
+            cachedColors[i] = text.getColor();
+        }
+        for(int i = 0; i < texturesList.size(); i++) {
+            WTexture wtexture = texturesList.get(i);
+            cachedIcons[i] = wtexture.getTexture();
+        }
+    }
+
+
+    public void updateLine(int index, Text newText) {
+        if(index >= 0 && index < textList.size()) {
+            String newString = newText.getString();
+            if(!cachedLines[index].equals(newString)) {
+                cachedLines[index] = newString;
+
+                textList.set(index, new WText(
+                        Text.literal(newString),
+                        cachedColors[index],
+                        textList.get(index).getX(),
+                        textList.get(index).getY(),
+                        textList.get(index).padding()
+                ));
+            }
+        }
+    }
+
+    public void updateColor(int index, int newColor) {
+        if(index >= 0 && index < textList.size()) {
+            if(cachedColors[index] != newColor) {
+                cachedColors[index] = newColor;
+                WText old = textList.get(index);
+
+                textList.set(index, new WText(
+                        Text.literal(cachedLines[index]),
+                        newColor,
+                        old.getX(),
+                        old.getY(),
+                        old.padding()
+                ));
+            }
+        }
+    }
+
+    public void updateIcon(int index, Identifier icon) {
+        if(index >= 0 && index < texturesList.size()) {
+            if(cachedIcons[index] != icon) {
+                cachedIcons[index] = icon;
+                WTexture texture = texturesList.get(index);
+
+                texturesList.set(index, new WTexture(
+                        cachedIcons[index],
+                        texture.getX(),
+                        texture.getY(),
+                        texture.getCentered(),
+                        texture.getWidgetWidth(),
+                        texture.getWidgetHeight(),
+                        texture.getScale()
+                ));
+            }
+        }
+    }
+
+    public void setPosition(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+
+
+    public void draw(DrawContext context) {
+        if(background && Config.widgetUseBg) {
+            context.fill(x, y, x+width, y+height, Config.widgetBg);
+        }
+
+        context.enableScissor(x, y, x+width, y+height);
+
+        for(WTexture icon : texturesList) {
+            if (icon != null) {
+                renderTexture(context, icon);
+            }
+        }
+        int currentPadding = 0;
+        for(WText text : textList) {
+            int textX = x + text.getX();
+            int textY = y + text.getY() + (text.padding() ? currentPadding : 0);
+            context.drawText(Evo_extrasClient.instance.textRenderer, Text.literal(cachedLines[textList.indexOf(text)]),
+                    textX,  textY, cachedColors[textList.indexOf(text)], true);
+
+            if(text.padding()) {
+                currentPadding += padding;
+            }
+        }
+
+        context.disableScissor();
+    }
+
+    private void renderTexture(DrawContext context, WTexture icon) {
+        int iconScale = icon.getScale();
+        if(icon.getCentered()) {
+            int ypos = height / 2 - iconScale / 2;
+            context.drawTexture(RenderLayer::getGuiTextured,
+                    icon.getTexture(),
+                    x + icon.getX(),
+                    y + ypos,
+                    0, 0, iconScale, iconScale, iconScale, iconScale);
+        } else {
+            context.drawTexture(RenderLayer::getGuiTextured,
+                    icon.getTexture(),
+                    x + icon.getX(),
+                    y + icon.getY(),
+                    0, 0, iconScale, iconScale, iconScale, iconScale);
+        }
+    }
+
+
+    public static class Builder {
+        private ArrayList<WTexture> texturesList = new ArrayList<>();
+        private ArrayList<WText> textList = new ArrayList<>();
+        private int padding;
+        private int x;
+        private int y;
+        private int width;
+        private int height;
+        private int scale;
+        private boolean background;
+
+        public Builder addTexture(Identifier texture, int x, int y, boolean centered, int widgetWidth, int widgetHeight, int scale) {
+            this.texturesList.add(new WTexture(texture, x, y, centered, widgetWidth, widgetHeight, scale));
+            return this;
+        }
+
+        public Builder addLine(Text text, int color, int x, int y, boolean usePadding) {
+            this.textList.add(new WText(text, color, x, y, usePadding));
+            return this;
+        }
+
+        public Builder setPadding(int padding) {
+            this.padding = padding;
+            return this;
+        }
+
+        public Builder setX(int x) {
+            this.x = x;
+            return this;
+        }
+
+        public Builder setY(int y) {
+            this.y = y;
+            return this;
+        }
+
+        public Builder setWidth(int width) {
+            this.width = width;
+            return this;
+        }
+
+        public Builder setHeight(int height) {
+            this.height = height;
+            return this;
+        }
+
+        public Builder setScale(int scale) {
+            this.scale = scale;
+            return this;
+        }
+
+        public Builder background(boolean bg) {
+            this.background = bg;
+            return this;
+        }
+
+        public ContextBuilder build() {
+            return new ContextBuilder(this);
+        }
+    }
+
+}

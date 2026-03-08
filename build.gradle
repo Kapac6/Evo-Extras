@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.11-SNAPSHOT'
+    id 'fabric-loom' version '1.15-SNAPSHOT'
     id 'maven-publish'
 }
 
@@ -23,7 +23,13 @@ repositories {
     // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
     // See https://docs.gradle.org/current/userguide/declaring_repositories.html
     // for more information about repositories.
-    maven{url = "https://repo.essential.gg/repository/maven-public"}
+//    maven{url = "https://repo.essential.gg/repository/maven-public"}
+
+    maven {
+        // Location of the maven that hosts Team Resourceful's jars.
+        name = "Team Resourceful Maven"
+        url = "https://maven.teamresourceful.com/repository/maven-public/"
+    }
 }
 
 dependencies {
@@ -36,9 +42,11 @@ dependencies {
 
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-    implementation(include("gg.essential:vigilance:$vigilanceVersion"))
-    modImplementation(include("gg.essential:universalcraft-1.21.3-fabric:$ucVersion"))
-    implementation(include("gg.essential:elementa:$elementaVersion"))
+//    implementation(include("gg.essential:vigilance:$vigilanceVersion"))
+//    modImplementation(include("gg.essential:universalcraft-1.21.3-fabric:$ucVersion"))
+//    implementation(include("gg.essential:elementa:$elementaVersion"))
+
+    modImplementation (include("com.teamresourceful.resourcefulconfig:resourcefulconfig-fabric-1.21.4:3.4.3"))
 }
 
 processResources {

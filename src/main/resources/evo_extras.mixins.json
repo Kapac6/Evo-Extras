@@ -1,11 +1,12 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "com.kapac6.evo_extras.mixin",
+  "package": "com.kapac6.evo_extras.client.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
   ],
   "client": [
+    "ActionBarMixin"
   ],
   "injectors": {
     "defaultRequire": 1
