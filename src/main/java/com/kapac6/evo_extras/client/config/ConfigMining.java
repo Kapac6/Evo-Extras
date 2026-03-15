@@ -1,8 +1,6 @@
 package com.kapac6.evo_extras.client.config;
 
-import com.kapac6.evo_extras.client.Evo_extrasClient;
 import com.kapac6.evo_extras.client.features.mine.blockPH.BlockProfitPerHour;
-import com.kapac6.evo_extras.client.ui.WidgetScreen;
 import com.teamresourceful.resourcefulconfig.api.annotations.*;
 
 @Category("Шахта")
@@ -12,14 +10,21 @@ public class ConfigMining {
             value = "Счетчик денег в час",
             description = "Считает примерное количество блоков/денег в час"
     )
-    @Comment(
-            value = "§cСейчас работает только с /autosell"
-    )
     @ConfigEntry(
             id = "bphWidgetToggle",
             translation = "Отображение виджета"
     )
     public static boolean bphWidgetToggle = false;
+
+
+    @Comment(
+            value = "§cВключать только если у вас нет /autosell\n§7Не будет считать деньги за вскопанные блоки"
+    )
+    @ConfigEntry(
+            id = "bphWidgetOnlyBlocks",
+            translation = "Считать только блоки"
+    )
+    public static boolean bphWidgetOnlyBlocks = false;
 
 
     @ConfigEntry(
@@ -61,6 +66,6 @@ public class ConfigMining {
     @ConfigButton(text = "Сбросить", title = "Сбросить виджет")
     public static final Runnable bphWidgetReset = () -> {
         BlockProfitPerHour.getInstance().reset();
-    }; /////////////////////////////////////
+    };
 
 }

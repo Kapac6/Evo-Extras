@@ -7,9 +7,7 @@ import com.kapac6.evo_extras.client.util.MoneyUtils;
 import net.fabricmc.fabric.api.event.client.player.ClientPlayerBlockBreakEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.client.world.ClientWorld;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 
@@ -44,11 +42,13 @@ public class BlockProfitPerHour implements ClientPlayerBlockBreakEvents.After {
     static Pattern shardMultiplierPattern = Pattern.compile("(\\d+)");
     @Override
     public void afterBlockBreak(ClientWorld world, ClientPlayerEntity playerEntity, BlockPos blockPos, BlockState blockState) {
-        if(latestActionBarTime <= maxLatestActionBar && !paused) {
+        if(ConfigMining.bphWidgetOnlyBlocks || (latestActionBarTime <= maxLatestActionBar && !paused)) {
             totalBrokenBlocks++;
+            latestBreak = 0;
         }
-        latestBreak = 0;
-        addMoney();
+        if(!ConfigMining.bphWidgetOnlyBlocks) {
+            addMoney();
+        }
     }
     public void reset() {
         totalBrokenBlocks = 0;
@@ -65,6 +65,7 @@ public class BlockProfitPerHour implements ClientPlayerBlockBreakEvents.After {
     }
     public void updateActionBar(Text text) {
         if(text.toString() == null) return;
+        if(ConfigMining.bphWidgetOnlyBlocks) return;
         Matcher matchingText = moneyPattern.matcher(text.toString());
         if(matchingText.find()) {
 
@@ -159,7 +160,8 @@ public class BlockProfitPerHour implements ClientPlayerBlockBreakEvents.After {
         latestBreak += 1000;
         latestActionBarTime += 1000;
 
-        if(latestBreak > maxLatestBreak || latestActionBarTime > maxLatestActionBar) {
+        if((!ConfigMining.bphWidgetOnlyBlocks && (latestBreak > maxLatestBreak || latestActionBarTime > maxLatestActionBar))
+                || (ConfigMining.bphWidgetOnlyBlocks && latestBreak > maxLatestBreak)) {
             paused = true;
         } else {
             uptime += 1000;
