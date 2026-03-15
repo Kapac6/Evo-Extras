@@ -35,7 +35,6 @@ public class ConfigRunes {
 
     @Comment("0 - отключение")
     @ConfigOption.Range(min = 0, max = 3)
-    @ConfigOption.Slider
     @ConfigEntry(
             id = "runeNinjaLevel",
             translation = "Уровень руны \"Ниндзя\""
@@ -45,7 +44,6 @@ public class ConfigRunes {
 
     @Comment("0 - отключение")
     @ConfigOption.Range(min = 0, max = 3)
-    @ConfigOption.Slider
     @ConfigEntry(
             id = "runeSadistLevel",
             translation = "Уровень руны \"Садист\""
@@ -55,7 +53,6 @@ public class ConfigRunes {
 
     @Comment("0 - отключение")
     @ConfigOption.Range(min = 0, max = 3)
-    @ConfigOption.Slider
     @ConfigEntry(
             id = "runeBesLevel",
             translation = "Уровень руны \"Бес\""
@@ -65,7 +62,6 @@ public class ConfigRunes {
 
     @Comment("0 - отключение")
     @ConfigOption.Range(min = 0, max = 3)
-    @ConfigOption.Slider
     @ConfigEntry(
             id = "runeMortusLevel",
             translation = "Уровень руны \"Мортус\""
@@ -75,7 +71,6 @@ public class ConfigRunes {
 
     @Comment("0 - отключение")
     @ConfigOption.Range(min = 0, max = 3)
-    @ConfigOption.Slider
     @ConfigEntry(
             id = "runeTempusLevel",
             translation = "Уровень руны \"Темпус\""
@@ -85,10 +80,10 @@ public class ConfigRunes {
 
     @Comment("0 - отключение")
     @ConfigOption.Range(min = 0, max = 3)
-    @ConfigOption.Slider
     @ConfigEntry(
             id = "runeSilenceLevel",
             translation = "Уровень руны \"Тишина\""
     )
     public static int runeSilenceLevel = 0;
+
 }
