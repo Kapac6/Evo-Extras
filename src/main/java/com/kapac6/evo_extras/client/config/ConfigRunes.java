@@ -14,6 +14,14 @@ public class ConfigRunes {
     )
     public static boolean runeDurationWidgetToggle = false;
 
+
+    @ConfigEntry(
+            id = "runeDurationWidgetName",
+            translation = "Отображение названия руны в виджете"
+    )
+    public static boolean runeDurationWidgetName = true;
+
+
     @ConfigEntry(
             id = "runeDurationWidgetBackColor",
             translation = "Задний цвет полоски"

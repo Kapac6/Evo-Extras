@@ -176,7 +176,7 @@ public class Evo_extrasClient implements ClientModInitializer {
                     HudConfig.WidgetRuneDurationX,
                     HudConfig.WidgetRuneDurationY,
                     200,
-                    10,
+                    16,
                     null
             );
         } else {

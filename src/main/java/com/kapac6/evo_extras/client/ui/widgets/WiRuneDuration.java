@@ -6,8 +6,6 @@ import com.kapac6.evo_extras.client.config.ConfigRunes;
 import com.kapac6.evo_extras.client.features.runes.RuneDurationBar;
 import com.kapac6.evo_extras.client.ui.WidgetScreen;
 import com.kapac6.evo_extras.client.ui.elements.ContextBuilder;
-import com.kapac6.evo_extras.client.util.MoneyUtils;
-import com.kapac6.evo_extras.client.util.TimeUtils;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.text.Text;
 
@@ -29,6 +27,7 @@ public class WiRuneDuration extends WWidget {
             contextBuilder = new ContextBuilder.Builder()
                     .addBar(2, 2, width - 2 -2, height - 2 -2,
                             ConfigRunes.runeDurationWidgetBackColor, ConfigRunes.runeDurationWidgetFrontColor)
+                    .addLine(Text.literal(""), 0xCAFEEDFF, 2+2, 2+2, false)
                     .setX(getX())
                     .setY(getY())
                     .setScale(1)
@@ -71,6 +70,9 @@ public class WiRuneDuration extends WWidget {
                 if(this.hudHidden) this.hideHud(false);
 
                 updateBar(0, runeDurationBar.value, 0, runeDurationBar.max);
+                if(ConfigRunes.runeDurationWidgetName) {
+                    updateLine(0, Text.literal(runeDurationBar.name));
+                } else updateLine(0, Text.literal(""));
                 contextBuilder.getBar(0).setBackColor(ConfigRunes.runeDurationWidgetBackColor);
                 contextBuilder.getBar(0).setFrontColor(ConfigRunes.runeDurationWidgetFrontColor);
 

@@ -27,7 +27,7 @@ public class WidgetScreen extends Screen {
         wiRuneDuration = new WiRuneDuration(
                 HudConfig.WidgetRuneDurationX,
                 HudConfig.WidgetRuneDurationY,
-                200, 10, this
+                200, 16, this
         );
 
         this.addDrawableChild(wiBlockProfitPH);
