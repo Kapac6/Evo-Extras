@@ -6,10 +6,10 @@ import com.kapac6.evo_extras.client.config.Hidden.HudConfig;
 import com.kapac6.evo_extras.client.event.ChatGameEvent;
 import com.kapac6.evo_extras.client.features.autoclicker.Clicker;
 import com.kapac6.evo_extras.client.features.mine.blockPH.BlockProfitPerHour;
-import com.kapac6.evo_extras.client.ui.WidgetScreen;
-import com.kapac6.evo_extras.client.ui.widgets.WBlockProfitPH;
+import com.kapac6.evo_extras.client.features.runes.RuneDurationBar;
+import com.kapac6.evo_extras.client.ui.widgets.WiBlockProfitPH;
 import com.kapac6.evo_extras.client.ui.widgets.WWidget;
-import com.kapac6.evo_extras.client.util.ContextBuilder;
+import com.kapac6.evo_extras.client.ui.widgets.WiRuneDuration;
 import com.teamresourceful.resourcefulconfig.api.client.ResourcefulConfigScreen;
 import com.teamresourceful.resourcefulconfig.api.loader.Configurator;
 import net.fabricmc.api.ClientModInitializer;
@@ -17,10 +17,8 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.message.v1.ClientReceiveMessageEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.HudLayerRegistrationCallback;
-import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.IdentifiedLayer;
 import net.fabricmc.fabric.api.event.client.player.ClientPlayerBlockBreakEvents;
-import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.util.Identifier;
@@ -47,9 +45,11 @@ public class Evo_extrasClient implements ClientModInitializer {
     public static Evo_extrasClient evoClient;
 
     private WWidget wBlockProfitPH;
+    private WWidget wiRuneDuration;
     private boolean widgetsInitialized = false;
     public static BlockProfitPerHour eventBlockProfitPerHour;
     public static ChatGameEvent eventChatGame;
+    public static RuneDurationBar runeDurationBar;
     @Override
     public void onInitializeClient() {
         logger.info("🎈🎈🎉\nEvo Extras initialized");
@@ -79,14 +79,30 @@ public class Evo_extrasClient implements ClientModInitializer {
         ClientReceiveMessageEvents.GAME.register(eventChatGame);
 
 
+        /*
+         * ХУЙНЯ ВСЯКАЯ ДЛЯ ВИДЖЕТОВ
+         */
+
+        runeDurationBar = new RuneDurationBar();
 
 
-        AtomicLong latestTick = new AtomicLong(System.currentTimeMillis());
+
+
+
+
+        AtomicLong latestSecond = new AtomicLong(System.currentTimeMillis());
+        AtomicLong latest100 = new AtomicLong(System.currentTimeMillis());
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            if(System.currentTimeMillis() - latestTick.get() >= 1000) { // раз в секунду вызывает всякое
+            if(System.currentTimeMillis() - latestSecond.get() >= 1000) { // раз в секунду вызывает всякое
                 eventBlockProfitPerHour.second();
-                latestTick.set(System.currentTimeMillis());
+                latestSecond.set(System.currentTimeMillis());
             }
+
+            if(System.currentTimeMillis() - latest100.get() >= 100) { // раз в 100 мс (2 майн тика) вызывает всякое
+                latest100.set(System.currentTimeMillis());
+            }
+
+            runeDurationBar.tick();
 
 
             if(!widgetsInitialized && client.player != null) { // инициализация виджетов
@@ -119,30 +135,55 @@ public class Evo_extrasClient implements ClientModInitializer {
                 if(wBlockProfitPH != null) {
                     wBlockProfitPH.render(context, 0, 0, tickCounter.getTickDelta(false));
                 }
+                if(wiRuneDuration != null) {
+                    wiRuneDuration.render(context, 0, 0, tickCounter.getTickDelta(false));
+                }
             }));
         });
 
     }
 
     public void initHudWidgets() {
-        wBlockProfitPH = new WBlockProfitPH(
-                HudConfig.WidgetBphX,
-                HudConfig.WidgetBphY,
-                230, //190
-                31,
-                null
-        );
-    }
-
-    public void reloadHudWidgets() {
-        if(wBlockProfitPH != null) {
+        /*
+         * Виджет счетчика блоков/час
+         */
+        if(wBlockProfitPH == null) {
+            wBlockProfitPH = new WiBlockProfitPH(
+                    HudConfig.WidgetBphX,
+                    HudConfig.WidgetBphY,
+                    230, //190
+                    31,
+                    null
+            );
+        } else {
             wBlockProfitPH.setX(HudConfig.WidgetBphX);
             wBlockProfitPH.setY(HudConfig.WidgetBphY);
             wBlockProfitPH.applyPos();
-        } else {
-            initHudWidgets();
         }
 
 
+        /*
+         * Виджет длительности рун
+         */
+        if(wiRuneDuration == null) {
+            if(HudConfig.WidgetRuneDurationX == 0 && HudConfig.WidgetRuneDurationY == 0) {
+                if(instance.currentScreen != null) {
+                    HudConfig.WidgetRuneDurationX = instance.getWindow().getScaledWidth()/2 - 100;
+                    HudConfig.WidgetRuneDurationY = instance.getWindow().getScaledHeight()/2 + 60;
+                }
+            }
+            wiRuneDuration = new WiRuneDuration(
+                    HudConfig.WidgetRuneDurationX,
+                    HudConfig.WidgetRuneDurationY,
+                    200,
+                    10,
+                    null
+            );
+        } else {
+            wiRuneDuration.setX(HudConfig.WidgetRuneDurationX);
+            wiRuneDuration.setY(HudConfig.WidgetRuneDurationY);
+            wiRuneDuration.applyPos();
+        }
     }
+
 }

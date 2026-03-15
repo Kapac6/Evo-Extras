@@ -1,8 +1,7 @@
 package com.kapac6.evo_extras.client.ui.widgets;
 
-import com.kapac6.evo_extras.client.Evo_extrasClient;
 import com.kapac6.evo_extras.client.ui.WidgetScreen;
-import com.kapac6.evo_extras.client.util.ContextBuilder;
+import com.kapac6.evo_extras.client.ui.elements.ContextBuilder;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.widget.ClickableWidget;
@@ -17,6 +16,7 @@ public abstract class WWidget extends ClickableWidget {
     private double x;
     private double y;
     protected boolean hidden;
+    protected boolean hudHidden;
 
 
 
@@ -26,10 +26,14 @@ public abstract class WWidget extends ClickableWidget {
         this.x = x;
         this.y = y;
         this.hidden = true;
+        this.hudHidden = false;
     }
 
     public void hide(boolean value) {
         hidden = value;
+    }
+    public void hideHud(boolean value) {
+        hudHidden = value;
     }
 
     @Override
@@ -43,6 +47,7 @@ public abstract class WWidget extends ClickableWidget {
     @Override
     protected void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
         if(hidden) return;
+        if(hudHidden && widgetScreen == null) return;
         int rx = (int) Math.round(x);
         int ry = (int) Math.round(y);
 
@@ -106,6 +111,11 @@ public abstract class WWidget extends ClickableWidget {
     protected void updateIcon(int index, Identifier icon) {
         if(contextBuilder != null) {
             contextBuilder.updateIcon(index, icon);
+        }
+    }
+    protected void updateBar(int index, int value, int min, int max) {
+        if(contextBuilder != null) {
+            contextBuilder.updateBar(index, value, min, max);
         }
     }
     public int getWidth() {

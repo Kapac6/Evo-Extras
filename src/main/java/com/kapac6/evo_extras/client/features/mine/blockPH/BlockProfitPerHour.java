@@ -41,6 +41,7 @@ public class BlockProfitPerHour implements ClientPlayerBlockBreakEvents.After {
 
 
     static Pattern moneyPattern = Pattern.compile("(\\d+\\.\\d+\\w)");
+    static Pattern shardMultiplierPattern = Pattern.compile("(\\d+)");
     @Override
     public void afterBlockBreak(ClientWorld world, ClientPlayerEntity playerEntity, BlockPos blockPos, BlockState blockState) {
         if(latestActionBarTime <= maxLatestActionBar && !paused) {
@@ -85,7 +86,15 @@ public class BlockProfitPerHour implements ClientPlayerBlockBreakEvents.After {
         String msg = text.getString();
 
         if(msg.startsWith("Вы нашли шард!")) {
-            totalShards++;
+            if(msg.length() > 14) { // если Вы нашли шард! x5; если умножается короче
+                Matcher matcher = shardMultiplierPattern.matcher(msg);
+                if(matcher.find()) {
+                    totalShards += Integer.parseInt(matcher.group());
+                }
+            } else {
+                totalShards++;
+            }
+
 
             latestActionBarTimeout = 0;
             latestBreak = 0;

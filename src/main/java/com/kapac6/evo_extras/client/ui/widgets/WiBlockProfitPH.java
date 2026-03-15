@@ -5,14 +5,14 @@ import com.kapac6.evo_extras.client.config.ConfigMining;
 import com.kapac6.evo_extras.client.config.Hidden.HudConfig;
 import com.kapac6.evo_extras.client.features.mine.blockPH.BlockProfitPerHour;
 import com.kapac6.evo_extras.client.ui.WidgetScreen;
-import com.kapac6.evo_extras.client.util.ContextBuilder;
+import com.kapac6.evo_extras.client.ui.elements.ContextBuilder;
 import com.kapac6.evo_extras.client.util.MoneyUtils;
 import com.kapac6.evo_extras.client.util.TimeUtils;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
-public class WBlockProfitPH extends WWidget {
+public class WiBlockProfitPH extends WWidget {
     private static final Identifier TEXTURE = Identifier.of("minecraft", "textures/item/netherite_pickaxe.png");
     private static final Identifier TEXTURE_PAUSED = Identifier.of("minecraft", "textures/item/barrier.png");
     private static final int TEXTURE_SIZE = 28;
@@ -22,12 +22,10 @@ public class WBlockProfitPH extends WWidget {
     private long lastUpdateTime = 0;
     private static final long UPDATE_COOLDOWN = 50; //50мс
 
-    private final boolean isEditMode;
 
-    public WBlockProfitPH(int x, int y, int width, int height, WidgetScreen widgetScreen) {
+    public WiBlockProfitPH(int x, int y, int width, int height, WidgetScreen widgetScreen) {
         super(x, y, width, height, widgetScreen);
         this.blockProfitPH = BlockProfitPerHour.getInstance();
-        this.isEditMode = widgetScreen != null;
         if(this.blockProfitPH == null) {
             this.blockProfitPH = Evo_extrasClient.eventBlockProfitPerHour;
         }

@@ -1,4 +1,4 @@
-package com.kapac6.evo_extras.client.util;
+package com.kapac6.evo_extras.client.ui.elements;
 
 import net.minecraft.text.Text;
 

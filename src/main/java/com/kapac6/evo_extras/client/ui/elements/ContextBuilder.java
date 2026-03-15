@@ -1,4 +1,4 @@
-package com.kapac6.evo_extras.client.util;
+package com.kapac6.evo_extras.client.ui.elements;
 
 import com.kapac6.evo_extras.client.Evo_extrasClient;
 import com.kapac6.evo_extras.client.config.Config;
@@ -13,6 +13,7 @@ import java.util.List;
 public class ContextBuilder {
     private final List<WTexture> texturesList;
     private final List<WText> textList;
+    private final List<WProgressBar> barList;
     private final int padding;
     private int x;
     private int y;
@@ -25,11 +26,13 @@ public class ContextBuilder {
     private final String[] cachedLines;
     private final int[] cachedColors;
     private final Identifier[] cachedIcons;
+
     private boolean needsTextUpdate = true;
 
     ContextBuilder(Builder builder) {
         this.texturesList = new ArrayList<>(builder.texturesList);
         this.textList = new ArrayList<>(builder.textList);
+        this.barList = new ArrayList<>(builder.barList);
         this.padding = builder.padding;
         this.x = builder.x;
         this.y = builder.y;
@@ -42,6 +45,7 @@ public class ContextBuilder {
         this.cachedColors = new int[textList.size()];
         this.cachedIcons = new Identifier[texturesList.size()];
 
+
         for(int i = 0; i < textList.size(); i++) {
             WText text = textList.get(i);
             cachedLines[i] = text.getText().getString();
@@ -51,6 +55,7 @@ public class ContextBuilder {
             WTexture wtexture = texturesList.get(i);
             cachedIcons[i] = wtexture.getTexture();
         }
+
     }
 
 
@@ -69,6 +74,13 @@ public class ContextBuilder {
                 ));
             }
         }
+    }
+
+    public void updateBar(int index, int value, int min, int max) {
+        barList.get(index).setValue(min, max, value);
+    }
+    public WProgressBar getBar(int index) {
+        return barList.get(index);
     }
 
     public void updateColor(int index, int newColor) {
@@ -138,6 +150,14 @@ public class ContextBuilder {
             }
         }
 
+        for(WProgressBar bar : barList) {
+            int bx = bar.getX();
+            int by = bar.getY();
+            context.fill(bx, by, bx+bar.getWidth(), by+bar.getHeight(), bar.getBackColor());  //фон
+            context.fill(bx, by, bx+bar.getValue(), by+bar.getHeight(), bar.getFrontColor()); //сам бар
+        }
+
+
         context.disableScissor();
     }
 
@@ -163,6 +183,7 @@ public class ContextBuilder {
     public static class Builder {
         private ArrayList<WTexture> texturesList = new ArrayList<>();
         private ArrayList<WText> textList = new ArrayList<>();
+        private ArrayList<WProgressBar> barList = new ArrayList<>();
         private int padding;
         private int x;
         private int y;
@@ -178,6 +199,11 @@ public class ContextBuilder {
 
         public Builder addLine(Text text, int color, int x, int y, boolean usePadding) {
             this.textList.add(new WText(text, color, x, y, usePadding));
+            return this;
+        }
+
+        public Builder addBar(int x, int y, int width, int height, int backColor, int frontColor) {
+            this.barList.add(new WProgressBar(x, y, width, height, backColor, frontColor));
             return this;
         }
 
