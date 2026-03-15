@@ -5,7 +5,6 @@
 2) Установите моды:
     - Скачайте последнюю версию Evo Extras с [релизов](https://github.com/Kapac6/Evo-Extras/releases/latest) или [Modrinth](https://modrinth.com/mod/evoextras/versions)
     - Скачайте [Fabric API](https://modrinth.com/mod/fabric-api/versions?c=release&g=1.21.4)
-    - Скачайте [Fabric Language Kotlin](https://modrinth.com/mod/fabric-language-kotlin/versions?g=1.21.4)
 3) Запустите майнкрафт
 
 Меню конфигурации по умолчанию открывается на Insert, можно изменить в настройках управления
