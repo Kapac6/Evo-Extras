@@ -4,15 +4,13 @@ import com.kapac6.evo_extras.client.Evo_extrasClient;
 import com.kapac6.evo_extras.client.config.Hidden.HudConfig;
 import com.kapac6.evo_extras.client.ui.WidgetScreen;
 import com.teamresourceful.resourcefulconfig.api.annotations.*;
-import com.teamresourceful.resourcefulconfig.api.types.options.EntryType;
-
-import java.awt.*;
 
 @com.teamresourceful.resourcefulconfig.api.annotations.Config(
         value = Evo_extrasClient.MODID,
         categories = {
                 ConfigAutoclicker.class,
                 ConfigMining.class,
+                ConfigRunes.class,
                 HudConfig.class
         }
 )
