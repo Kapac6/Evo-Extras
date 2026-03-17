@@ -4,8 +4,10 @@ import com.kapac6.evo_extras.client.config.Config;
 import com.kapac6.evo_extras.client.config.ConfigAutoclicker;
 import com.kapac6.evo_extras.client.config.Hidden.HudConfig;
 import com.kapac6.evo_extras.client.event.ChatGameEvent;
+import com.kapac6.evo_extras.client.event.SoundEvents;
 import com.kapac6.evo_extras.client.features.autoclicker.Clicker;
 import com.kapac6.evo_extras.client.features.mine.blockPH.BlockProfitPerHour;
+import com.kapac6.evo_extras.client.features.notifications.BossRespawnNotify;
 import com.kapac6.evo_extras.client.features.runes.RuneDurationBar;
 import com.kapac6.evo_extras.client.ui.widgets.WiBlockProfitPH;
 import com.kapac6.evo_extras.client.ui.widgets.WWidget;
@@ -50,9 +52,11 @@ public class Evo_extrasClient implements ClientModInitializer {
     public static BlockProfitPerHour eventBlockProfitPerHour;
     public static ChatGameEvent eventChatGame;
     public static RuneDurationBar runeDurationBar;
+    public static BossRespawnNotify bossRespawnNotify;
     @Override
     public void onInitializeClient() {
         logger.info("🎈🎈🎉\nEvo Extras initialized");
+        SoundEvents.initialize();
 
         instance = MinecraftClient.getInstance();
         evoClient = this;
@@ -80,10 +84,11 @@ public class Evo_extrasClient implements ClientModInitializer {
 
 
         /*
-         * ХУЙНЯ ВСЯКАЯ ДЛЯ ВИДЖЕТОВ
+         * ФИЧИ
          */
 
         runeDurationBar = new RuneDurationBar();
+        bossRespawnNotify = new BossRespawnNotify();
 
 
 

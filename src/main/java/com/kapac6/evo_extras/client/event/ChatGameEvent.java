@@ -1,5 +1,6 @@
 package com.kapac6.evo_extras.client.event;
 
+import com.kapac6.evo_extras.client.Evo_extrasClient;
 import com.kapac6.evo_extras.client.features.mine.blockPH.BlockProfitPerHour;
 import com.kapac6.evo_extras.client.features.runes.RuneDurationBar;
 import net.fabricmc.fabric.api.client.message.v1.ClientReceiveMessageEvents;
@@ -10,5 +11,6 @@ public class ChatGameEvent implements ClientReceiveMessageEvents.Game {
     public void onReceiveGameMessage(Text text, boolean b) {
         BlockProfitPerHour.getInstance().getMessage(text, b);
         RuneDurationBar.getInstance().getMessage(text, b);
+        Evo_extrasClient.bossRespawnNotify.getMessage(text, b);
     }
 }

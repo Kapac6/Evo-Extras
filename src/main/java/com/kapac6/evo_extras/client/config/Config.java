@@ -11,7 +11,9 @@ import com.teamresourceful.resourcefulconfig.api.annotations.*;
                 ConfigAutoclicker.class,
                 ConfigMining.class,
                 ConfigRunes.class,
+                ConfigNotify.class,
                 HudConfig.class
+
         }
 )
 @ConfigInfo(
