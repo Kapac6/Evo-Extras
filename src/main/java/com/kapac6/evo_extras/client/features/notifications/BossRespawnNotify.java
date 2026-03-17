@@ -10,11 +10,11 @@ import java.util.regex.Pattern;
 
 public class BossRespawnNotify {
 
-    static Pattern respawnPattern = Pattern.compile("\\[EvoPlus] .+ возродился");
+    static Pattern respawnPattern = Pattern.compile("§.\\[§.Evo§.Plus§.]§. §..+ §.возродился");
     public void getMessage(Text text, boolean overlay) {
         String msg = text.getString();
 
-        if(ConfigNotify.bossSoundNotifyToggle && msg.startsWith("[EvoPlus]")) {
+        if(ConfigNotify.bossSoundNotifyToggle && msg.startsWith("§7[§bEvo§fPlus§7]")) {
             Matcher matcher = respawnPattern.matcher(msg);
             if(matcher.find()) {
                 if(Evo_extrasClient.instance.player == null) return;

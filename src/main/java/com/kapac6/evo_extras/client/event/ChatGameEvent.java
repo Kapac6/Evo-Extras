@@ -12,5 +12,6 @@ public class ChatGameEvent implements ClientReceiveMessageEvents.Game {
         BlockProfitPerHour.getInstance().getMessage(text, b);
         RuneDurationBar.getInstance().getMessage(text, b);
         Evo_extrasClient.bossRespawnNotify.getMessage(text, b);
+        Evo_extrasClient.logger.info(text.getString());
     }
 }
