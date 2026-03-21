@@ -7,6 +7,7 @@ import com.teamresourceful.resourcefulconfig.api.annotations.ConfigOption;
 
 @Category(value = "Автокликер")
 public class ConfigAutoclicker {
+    @ConfigOption.Hidden
     @ConfigEntry(
             id = "autoclickerToggle",
             translation = "evoextras.config.autoclicker.toggle"

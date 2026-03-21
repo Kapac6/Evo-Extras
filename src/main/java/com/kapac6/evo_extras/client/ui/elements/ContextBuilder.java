@@ -17,8 +17,8 @@ public class ContextBuilder {
     private final int padding;
     private int x;
     private int y;
-    private final int width;
-    private final int height;
+    private int width;
+    private int height;
     private final int scale;
     private final boolean background;
 
@@ -27,7 +27,6 @@ public class ContextBuilder {
     private final int[] cachedColors;
     private final Identifier[] cachedIcons;
 
-    private boolean needsTextUpdate = true;
 
     ContextBuilder(Builder builder) {
         this.texturesList = new ArrayList<>(builder.texturesList);
