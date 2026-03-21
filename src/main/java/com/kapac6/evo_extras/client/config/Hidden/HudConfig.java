@@ -36,4 +36,23 @@ public class HudConfig {
             translation = "rune duration widget Y"
     )
     public static int WidgetRuneDurationY = 0;
+
+
+
+    @ConfigOption.Hidden
+    @ConfigEntry(
+            id = "BoostCounterWidgetX",
+            translation = "boost counter widget X"
+    )
+    public static int WidgetBoostCounterX = 0;
+
+    @ConfigOption.Hidden
+    @ConfigEntry(
+            id = "BoostCounterWidgetY",
+            translation = "boost counter widget Y"
+    )
+    public static int WidgetBoostCounterY = 0;
+
+    public static int WWboostCounterWidth = 160;
+    public static int WWboostCounterHeight = 10;
 }

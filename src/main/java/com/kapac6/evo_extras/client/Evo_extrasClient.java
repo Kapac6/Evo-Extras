@@ -7,10 +7,12 @@ import com.kapac6.evo_extras.client.event.ChatGameEvent;
 import com.kapac6.evo_extras.client.event.SoundEvents;
 import com.kapac6.evo_extras.client.features.autoclicker.Clicker;
 import com.kapac6.evo_extras.client.features.mine.blockPH.BlockProfitPerHour;
+import com.kapac6.evo_extras.client.features.mine.boostCounter.BoostCounter;
 import com.kapac6.evo_extras.client.features.notifications.BossRespawnNotify;
 import com.kapac6.evo_extras.client.features.runes.RuneDurationBar;
 import com.kapac6.evo_extras.client.ui.widgets.WiBlockProfitPH;
 import com.kapac6.evo_extras.client.ui.widgets.WWidget;
+import com.kapac6.evo_extras.client.ui.widgets.WiBoostCounter;
 import com.kapac6.evo_extras.client.ui.widgets.WiRuneDuration;
 import com.teamresourceful.resourcefulconfig.api.client.ResourcefulConfigScreen;
 import com.teamresourceful.resourcefulconfig.api.loader.Configurator;
@@ -48,11 +50,13 @@ public class Evo_extrasClient implements ClientModInitializer {
 
     private WWidget wBlockProfitPH;
     private WWidget wiRuneDuration;
+    private WWidget wiBoostCounter;
     private boolean widgetsInitialized = false;
     public static BlockProfitPerHour eventBlockProfitPerHour;
     public static ChatGameEvent eventChatGame;
     public static RuneDurationBar runeDurationBar;
     public static BossRespawnNotify bossRespawnNotify;
+    public static BoostCounter boostCounter;
     @Override
     public void onInitializeClient() {
         logger.info("🎈🎈🎉\nEvo Extras initialized");
@@ -89,6 +93,7 @@ public class Evo_extrasClient implements ClientModInitializer {
 
         runeDurationBar = new RuneDurationBar();
         bossRespawnNotify = new BossRespawnNotify();
+        boostCounter = new BoostCounter();
 
 
 
@@ -143,6 +148,9 @@ public class Evo_extrasClient implements ClientModInitializer {
                 if(wiRuneDuration != null) {
                     wiRuneDuration.render(context, 0, 0, tickCounter.getTickDelta(false));
                 }
+                if(wiBoostCounter != null) {
+                    wiBoostCounter.render(context, 0, 0, tickCounter.getTickDelta(false));
+                }
             }));
         });
 
@@ -188,6 +196,24 @@ public class Evo_extrasClient implements ClientModInitializer {
             wiRuneDuration.setX(HudConfig.WidgetRuneDurationX);
             wiRuneDuration.setY(HudConfig.WidgetRuneDurationY);
             wiRuneDuration.applyPos();
+        }
+
+
+        /*
+         * Виджет список локальных бустеров
+         */
+        if(wiBoostCounter == null) {
+            wiBoostCounter = new WiBoostCounter(
+                    HudConfig.WidgetBoostCounterX,
+                    HudConfig.WidgetBoostCounterY,
+                    HudConfig.WWboostCounterWidth,
+                    HudConfig.WWboostCounterHeight,
+                    null
+            );
+        } else {
+            wiBoostCounter.setX(HudConfig.WidgetBoostCounterX);
+            wiBoostCounter.setY(HudConfig.WidgetBoostCounterY);
+            wiBoostCounter.applyPos();
         }
     }
 

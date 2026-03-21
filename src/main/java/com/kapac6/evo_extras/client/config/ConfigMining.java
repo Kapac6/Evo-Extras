@@ -68,4 +68,14 @@ public class ConfigMining {
         BlockProfitPerHour.getInstance().reset();
     };
 
+    @ConfigOption.Separator(
+            value = "Список локальных бустеров",
+            description = "Показывает активные локальные бустеры в виде списка"
+    )
+    @ConfigEntry(
+            id = "boostCounterWidgetToggle",
+            translation = "Отображение виджета"
+    )
+    public static boolean boostCounterWidgetToggle = false;
+
 }
