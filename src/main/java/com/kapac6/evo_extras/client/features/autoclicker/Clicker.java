@@ -19,7 +19,7 @@ public class Clicker {
 
         if((currentTime - lastClickTime) >= clickCooldown) {
             if(mc.world != null && mc.player != null && mc.player.isAlive()) {
-                if(ConfigAutoclicker.autoclickerButton.equals(ConfigAutoclicker.ENUMautoclickerButton.ПКМ)) { //если пкм
+                if(ConfigAutoclicker.autoclickerButton.equals(ConfigAutoclicker.ENUMautoclickerButton.RMB)) { //если пкм
                     KeyBinding.onKeyPressed(mc.options.useKey.getDefaultKey());
                 } else {
 

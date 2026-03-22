@@ -23,8 +23,16 @@ public class ConfigAutoclicker {
             translation = "evoextras.config.autoclicker.button"
     )
     @ConfigOption.Select
-    public static ENUMautoclickerButton autoclickerButton = ENUMautoclickerButton.ЛКМ; //////////////////////////////////////
-    public enum ENUMautoclickerButton {ЛКМ, ПКМ}
+    public static ENUMautoclickerButton autoclickerButton = ENUMautoclickerButton.LMB; //////////////////////////////////////
+    public enum ENUMautoclickerButton {
+        LMB, RMB;
+        @Override
+        public String toString() {
+            return switch (this) {
+                case LMB -> "ЛКМ";
+                case RMB -> "ПКМ";
+            };
+        }}
 
 
     @ConfigEntry(
@@ -32,8 +40,17 @@ public class ConfigAutoclicker {
             translation = "evoextras.config.autoclicker.activation"
     )
     @ConfigOption.Select
-    public static ENUMautoclickerActivation autoclickerActivation = ENUMautoclickerActivation.Переключение; /////////////////////////////
-    public enum ENUMautoclickerActivation {Зажатие, Переключение}
+    public static ENUMautoclickerActivation autoclickerActivation = ENUMautoclickerActivation.SWITCH; /////////////////////////////
+    public enum ENUMautoclickerActivation {
+        HOLD, SWITCH;
+        @Override
+        public String toString() {
+            return switch (this) {
+                case HOLD -> "Зажатие";
+                case SWITCH -> "Переключение";
+            };
+        }
+    }
 
 
     @ConfigEntry(

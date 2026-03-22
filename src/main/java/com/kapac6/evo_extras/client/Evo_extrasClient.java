@@ -134,7 +134,7 @@ public class Evo_extrasClient implements ClientModInitializer {
 
             Clicker.AutoClickerTick(instance, true); // кликер
 
-            if(ConfigAutoclicker.autoclickerActivation.equals(ConfigAutoclicker.ENUMautoclickerActivation.Зажатие)) {
+            if(ConfigAutoclicker.autoclickerActivation.equals(ConfigAutoclicker.ENUMautoclickerActivation.HOLD)) {
                 ConfigAutoclicker.autoclickerToggle = false;
                 if(ClickerBind.isPressed()) {
                     Clicker.AutoClickerTick(instance, false);

@@ -11,6 +11,7 @@ import net.minecraft.client.world.ClientWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -119,23 +120,27 @@ public class BlockProfitPerHour implements ClientPlayerBlockBreakEvents.After {
 
     private static boolean isFound(String msg) {
         boolean found = false;
-        if(ConfigMining.bphWidgetBarrels && (msg.startsWith("Фиолетовая бочка") || msg.startsWith("Красная бочка"))) {
+        if(Arrays.asList(ConfigMining.bphWidgetAllowed).contains(ConfigMining.bphAllowEnum.BARRELS) && (msg.startsWith("Фиолетовая бочка") || msg.startsWith("Красная бочка"))) {
             found = true;
 
         } else
-        if(ConfigMining.bphWidgetRunes && msg.startsWith("Руна")) {
+        if(Arrays.asList(ConfigMining.bphWidgetAllowed).contains(ConfigMining.bphAllowEnum.RUNES) && msg.startsWith("Руна")) {
             found = true;
 
         } else
-        if(ConfigMining.bphWidgetBombs && msg.startsWith("Вы взорвали")) {
+        if(Arrays.asList(ConfigMining.bphWidgetAllowed).contains(ConfigMining.bphAllowEnum.BOMBS) && msg.startsWith("Вы взорвали")) {
             found = true;
 
         } else
-        if(ConfigMining.bphWidgetPets && msg.startsWith("Вы сломали")) {
+        if(Arrays.asList(ConfigMining.bphWidgetAllowed).contains(ConfigMining.bphAllowEnum.PETS) && msg.startsWith("Вы сломали всю шахту")) {
             found = true;
 
         } else
-        if(ConfigMining.bphWidgetMultitool && (
+        if(Arrays.asList(ConfigMining.bphWidgetAllowed).contains(ConfigMining.bphAllowEnum.WANDS) && msg.startsWith("Вы сломали")) {
+            found = true;
+
+        } else
+        if(Arrays.asList(ConfigMining.bphWidgetAllowed).contains(ConfigMining.bphAllowEnum.MULTITOOL) && (
                 msg.startsWith("Сокрушающий меч разрубил") ||
                 msg.startsWith("Залп стрел"))) {
             found = true;

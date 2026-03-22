@@ -26,40 +26,29 @@ public class ConfigMining {
     )
     public static boolean bphWidgetOnlyBlocks = false;
 
-
     @ConfigEntry(
-            id = "bphWidgetBarrels",
-            translation = "Учитывать бочки"
+            id = "bphWidgetAllowed",
+            translation = "Учитывать в счетчике"
     )
-    public static boolean bphWidgetBarrels = false;
+    @ConfigOption.Select("Выбрать")
+    public static bphAllowEnum[] bphWidgetAllowed = bphAllowEnum.values();
 
+    public enum bphAllowEnum {
+        BARRELS, RUNES, BOMBS, PETS, WANDS, MULTITOOL;
 
-    @ConfigEntry(
-            id = "bphWidgetRunes",
-            translation = "Учитывать руны"
-    )
-    public static boolean bphWidgetRunes = false;
+        @Override
+        public String toString() {
+            return switch (this) {
+                case BARRELS -> "Бочки";
+                case RUNES -> "Руны";
+                case BOMBS -> "Бомбочки";
+                case PETS -> "Питомцы";
+                case WANDS -> "Посохи";
+                case MULTITOOL -> "Мультитул";
+            };
+        }
 
-
-    @ConfigEntry(
-            id = "bphWidgetBombs",
-            translation = "Учитывать бомбочки"
-    )
-    public static boolean bphWidgetBombs = false;
-
-
-    @ConfigEntry(
-            id = "bphWidgetPets",
-            translation = "Учитывать питомцев и посох шахтёра"
-    )
-    public static boolean bphWidgetPets = false;
-
-
-    @ConfigEntry(
-            id = "bphWidgetMultitool",
-            translation = "Учитывать зачарования на мультитуле"
-    )
-    public static boolean bphWidgetMultitool = false;
+    }
 
 
 
