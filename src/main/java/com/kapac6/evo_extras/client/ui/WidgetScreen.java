@@ -26,11 +26,8 @@ public class WidgetScreen extends Screen {
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double xAmount, double yAmount) {
         for (Element element : this.children()) {
-            Evo_extrasClient.logger.info("element");
             if (element instanceof ClickableWidget widget && widget.isMouseOver(mouseX, mouseY)) {
-                Evo_extrasClient.logger.info("instance and over");
                 if(widget instanceof WWidget wWidget) {
-                    Evo_extrasClient.logger.info(String.format("resize! x: %s, y: %s", xAmount, yAmount));
                     wWidget.resize(yAmount);
                     return true;
                 }
