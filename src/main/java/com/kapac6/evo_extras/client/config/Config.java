@@ -29,7 +29,7 @@ import com.teamresourceful.resourcefulconfig.api.annotations.*;
             ),
             @ConfigInfo.Link(
                     value = "https://discord.gg/sx4TXM2NX8",
-                    icon = "cat",
+                    icon = "code-2",
                     text = "Discord"
             )
         }
