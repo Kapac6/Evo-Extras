@@ -100,6 +100,27 @@ public class Evo_extrasClient implements ClientModInitializer {
 
 
 
+        /*
+         * КОМАНДЫ
+         */
+        ClientCommandRegistrationCallback.EVENT.register(((commandDispatcher, commandRegistryAccess) -> {
+            commandDispatcher.register(ClientCommandManager.literal("evoextras").executes(commandContext -> {
+                instance.send(() -> instance.setScreen(ResourcefulConfigScreen.getFactory(MODID).apply(null)));
+                return 1;
+            }));
+            commandDispatcher.register(ClientCommandManager.literal("ex").executes(commandContext -> {
+                instance.send(() -> instance.setScreen(ResourcefulConfigScreen.getFactory(MODID).apply(null)));
+                return 1;
+            }));
+            commandDispatcher.register(ClientCommandManager.literal("evoextraswidgets").executes(commandContext -> {
+                instance.send(() -> instance.setScreen(new WidgetScreen()));
+                return 1;
+            }));
+            commandDispatcher.register(ClientCommandManager.literal("exw").executes(commandContext -> {
+                instance.send(() -> instance.setScreen(new WidgetScreen()));
+                return 1;
+            }));
+        }));
 
 
 
