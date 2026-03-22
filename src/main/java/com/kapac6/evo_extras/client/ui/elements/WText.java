@@ -5,8 +5,8 @@ import net.minecraft.text.Text;
 public class WText {
     private final Text text;
     private final int color;
-    private final int x;
-    private final int y;
+    private int x;
+    private int y;
     private final boolean padding;
     WText(Text text, int color, int x, int y, boolean padding) {
         this.text = text;

@@ -25,7 +25,7 @@ public class WiBoostCounter extends WWidget {
     private double totalShardBoost = 0;
 
     public WiBoostCounter(int x, int y, int width, int height, WidgetScreen widgetScreen) {
-        super(x, y, width, height, widgetScreen);
+        super(x, y, width, height, widgetScreen, HudConfig.WidgetBoostCounterScale);
         this.boostCounter = Evo_extrasClient.boostCounter;
     }
 
@@ -45,7 +45,7 @@ public class WiBoostCounter extends WWidget {
     }
 
     @Override
-    protected void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
+    public void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
         if (ConfigMining.boostCounterWidgetToggle) {
             hide(false);
         } else {
@@ -104,6 +104,7 @@ public class WiBoostCounter extends WWidget {
                     boosts++;
                 }
                 this.contextBuilder = builder.setWidth(width).setHeight(height).build();
+                setBaseHeight(height);
             } else {
                 int index = 1;
                 List<Boost> clonedList = new ArrayList<>(boostCounter.boostList);
@@ -125,5 +126,14 @@ public class WiBoostCounter extends WWidget {
     protected void savePosition() {
         HudConfig.WidgetBoostCounterX = getX();
         HudConfig.WidgetBoostCounterY = getY();
+    }
+
+    @Override
+    protected void saveScale(double scale) {
+        HudConfig.WidgetBoostCounterScale = scale;
+    }
+    @Override
+    protected double loadScale() {
+        return HudConfig.WidgetBoostCounterScale;
     }
 }

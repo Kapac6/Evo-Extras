@@ -21,6 +21,13 @@ public class HudConfig {
     )
     public static int WidgetBphY = 0;
 
+    @ConfigOption.Hidden
+    @ConfigEntry(
+            id = "bphWidgetScale",
+            translation = "bph widget scale"
+    )
+    public static double WidgetBphScale = 1;
+
 
 
     @ConfigOption.Hidden
@@ -37,6 +44,12 @@ public class HudConfig {
     )
     public static int WidgetRuneDurationY = 0;
 
+    @ConfigOption.Hidden
+    @ConfigEntry(
+            id = "RuneDurationWidgetScale",
+            translation = "rune duration widget scale"
+    )
+    public static double WidgetRuneDurationScale = 1;
 
 
     @ConfigOption.Hidden
@@ -52,6 +65,13 @@ public class HudConfig {
             translation = "boost counter widget Y"
     )
     public static int WidgetBoostCounterY = 0;
+
+    @ConfigOption.Hidden
+    @ConfigEntry(
+            id = "BoostCounterWidgetScale",
+            translation = "boost counter widget scale"
+    )
+    public static double WidgetBoostCounterScale = 1;
 
     public static int WWboostCounterWidth = 160;
     public static int WWboostCounterHeight = 10;

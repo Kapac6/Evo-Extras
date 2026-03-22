@@ -15,7 +15,7 @@ public class WiRuneDuration extends WWidget {
     private static final long UPDATE_COOLDOWN = 20; //50мс
 
     public WiRuneDuration(int x, int y, int width, int height, WidgetScreen widgetScreen) {
-        super(x, y, width, height, widgetScreen);
+        super(x, y, width, height, widgetScreen, HudConfig.WidgetRuneDurationScale);
         this.runeDurationBar = RuneDurationBar.getInstance();
         if(runeDurationBar == null) {
             this.runeDurationBar = Evo_extrasClient.runeDurationBar;
@@ -39,7 +39,7 @@ public class WiRuneDuration extends WWidget {
     }
 
     @Override
-    protected void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
+    public void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
         if (ConfigRunes.runeDurationWidgetToggle) {
             hide(false);
         } else {
@@ -91,5 +91,15 @@ public class WiRuneDuration extends WWidget {
     protected void savePosition() {
         HudConfig.WidgetRuneDurationX = getX();
         HudConfig.WidgetRuneDurationY = getY();
+    }
+
+    @Override
+    protected void saveScale(double scale) {
+        HudConfig.WidgetRuneDurationScale = scale;
+    }
+
+    @Override
+    protected double loadScale() {
+        return HudConfig.WidgetRuneDurationScale;
     }
 }

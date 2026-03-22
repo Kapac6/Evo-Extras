@@ -3,10 +3,13 @@ package com.kapac6.evo_extras.client.ui;
 import com.kapac6.evo_extras.client.Evo_extrasClient;
 import com.kapac6.evo_extras.client.config.Config;
 import com.kapac6.evo_extras.client.config.Hidden.HudConfig;
+import com.kapac6.evo_extras.client.ui.widgets.WWidget;
 import com.kapac6.evo_extras.client.ui.widgets.WiBlockProfitPH;
 import com.kapac6.evo_extras.client.ui.widgets.WiBoostCounter;
 import com.kapac6.evo_extras.client.ui.widgets.WiRuneDuration;
+import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.text.Text;
 
 
@@ -18,6 +21,22 @@ public class WidgetScreen extends Screen {
     public WidgetScreen() {
         super(Text.literal("Widget screen"));
         initScreenWidgets();
+    }
+
+    @Override
+    public boolean mouseScrolled(double mouseX, double mouseY, double xAmount, double yAmount) {
+        for (Element element : this.children()) {
+            Evo_extrasClient.logger.info("element");
+            if (element instanceof ClickableWidget widget && widget.isMouseOver(mouseX, mouseY)) {
+                Evo_extrasClient.logger.info("instance and over");
+                if(widget instanceof WWidget wWidget) {
+                    Evo_extrasClient.logger.info(String.format("resize! x: %s, y: %s", xAmount, yAmount));
+                    wWidget.resize(yAmount);
+                    return true;
+                }
+            }
+        }
+        return super.mouseScrolled(mouseX, mouseY, xAmount, yAmount);
     }
 
     private void initScreenWidgets() {
@@ -50,17 +69,14 @@ public class WidgetScreen extends Screen {
         if(wiBlockProfitPH != null) {
             HudConfig.WidgetBphX = wiBlockProfitPH.getX();
             HudConfig.WidgetBphY = wiBlockProfitPH.getY();
-            Evo_extrasClient.logger.info(String.format("bph x: %s, y: %s", HudConfig.WidgetBphX, HudConfig.WidgetBphY));
         }
         if(wiRuneDuration != null) {
             HudConfig.WidgetRuneDurationX = wiRuneDuration.getX();
             HudConfig.WidgetRuneDurationY = wiRuneDuration.getY();
-            Evo_extrasClient.logger.info(String.format("rnd x: %s, y: %s", HudConfig.WidgetRuneDurationX, HudConfig.WidgetRuneDurationY));
         }
         if(wiBoostCounter != null) {
             HudConfig.WidgetBoostCounterX = wiBoostCounter.getX();
             HudConfig.WidgetBoostCounterY = wiBoostCounter.getY();
-            Evo_extrasClient.logger.info(String.format("bst x: %s, y: %s", HudConfig.WidgetBoostCounterX, HudConfig.WidgetBoostCounterY));
         }
 
 

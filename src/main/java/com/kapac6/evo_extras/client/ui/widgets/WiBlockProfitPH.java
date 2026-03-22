@@ -24,7 +24,7 @@ public class WiBlockProfitPH extends WWidget {
 
 
     public WiBlockProfitPH(int x, int y, int width, int height, WidgetScreen widgetScreen) {
-        super(x, y, width, height, widgetScreen);
+        super(x, y, width, height, widgetScreen, HudConfig.WidgetBphScale);
         this.blockProfitPH = BlockProfitPerHour.getInstance();
         if(this.blockProfitPH == null) {
             this.blockProfitPH = Evo_extrasClient.eventBlockProfitPerHour;
@@ -49,7 +49,7 @@ public class WiBlockProfitPH extends WWidget {
         }
     }
     @Override
-    protected void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
+    public void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
         if(ConfigMining.bphWidgetToggle) {
             hide(false);
         } else {
@@ -102,5 +102,15 @@ public class WiBlockProfitPH extends WWidget {
     protected void savePosition() {
         HudConfig.WidgetBphX = getX();
         HudConfig.WidgetBphY = getY();
+    }
+
+    @Override
+    protected void saveScale(double scale) {
+        HudConfig.WidgetBphScale = scale;
+    }
+
+    @Override
+    protected double loadScale() {
+        return HudConfig.WidgetBphScale;
     }
 }

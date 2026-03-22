@@ -10,6 +10,7 @@ import com.kapac6.evo_extras.client.features.mine.blockPH.BlockProfitPerHour;
 import com.kapac6.evo_extras.client.features.mine.boostCounter.BoostCounter;
 import com.kapac6.evo_extras.client.features.notifications.BossRespawnNotify;
 import com.kapac6.evo_extras.client.features.runes.RuneDurationBar;
+import com.kapac6.evo_extras.client.ui.WidgetScreen;
 import com.kapac6.evo_extras.client.ui.widgets.WiBlockProfitPH;
 import com.kapac6.evo_extras.client.ui.widgets.WWidget;
 import com.kapac6.evo_extras.client.ui.widgets.WiBoostCounter;
@@ -17,6 +18,8 @@ import com.kapac6.evo_extras.client.ui.widgets.WiRuneDuration;
 import com.teamresourceful.resourcefulconfig.api.client.ResourcefulConfigScreen;
 import com.teamresourceful.resourcefulconfig.api.loader.Configurator;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.message.v1.ClientReceiveMessageEvents;
@@ -100,6 +103,9 @@ public class Evo_extrasClient implements ClientModInitializer {
 
 
 
+
+
+
         AtomicLong latestSecond = new AtomicLong(System.currentTimeMillis());
         AtomicLong latest100 = new AtomicLong(System.currentTimeMillis());
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
@@ -173,6 +179,8 @@ public class Evo_extrasClient implements ClientModInitializer {
             wBlockProfitPH.setY(HudConfig.WidgetBphY);
             wBlockProfitPH.applyPos();
         }
+        wBlockProfitPH.setScale(HudConfig.WidgetBphScale);
+
 
 
         /*
@@ -197,6 +205,7 @@ public class Evo_extrasClient implements ClientModInitializer {
             wiRuneDuration.setY(HudConfig.WidgetRuneDurationY);
             wiRuneDuration.applyPos();
         }
+        wiRuneDuration.setScale(HudConfig.WidgetRuneDurationScale);
 
 
         /*
@@ -215,6 +224,7 @@ public class Evo_extrasClient implements ClientModInitializer {
             wiBoostCounter.setY(HudConfig.WidgetBoostCounterY);
             wiBoostCounter.applyPos();
         }
+        wiBoostCounter.setScale(HudConfig.WidgetBoostCounterScale);
     }
 
 }

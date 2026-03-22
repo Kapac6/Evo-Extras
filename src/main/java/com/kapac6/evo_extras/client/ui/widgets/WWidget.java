@@ -1,5 +1,6 @@
 package com.kapac6.evo_extras.client.ui.widgets;
 
+import com.kapac6.evo_extras.client.Evo_extrasClient;
 import com.kapac6.evo_extras.client.ui.WidgetScreen;
 import com.kapac6.evo_extras.client.ui.elements.ContextBuilder;
 import net.minecraft.client.gui.DrawContext;
@@ -15,18 +16,24 @@ public abstract class WWidget extends ClickableWidget {
 
     private double x;
     private double y;
+    private int baseWidth;
+    private int baseHeight;
     protected boolean hidden;
     protected boolean hudHidden;
+    protected double scale;
 
 
 
-    public WWidget(int x, int y, int width, int height, WidgetScreen widgetScreen) {
+    public WWidget(int x, int y, int width, int height, WidgetScreen widgetScreen, double scale) {
         super(x, y, width, height, Text.empty());
         this.widgetScreen = widgetScreen;
         this.x = x;
         this.y = y;
+        this.baseWidth = width;
+        this.baseHeight = height;
         this.hidden = true;
         this.hudHidden = false;
+        this.scale = scale;
     }
 
     public void hide(boolean value) {
@@ -45,9 +52,23 @@ public abstract class WWidget extends ClickableWidget {
 
 
     @Override
-    protected void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
+    public void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
         if(hidden) return;
         if(hudHidden && widgetScreen == null) return;
+        if(widgetScreen != null) {
+            context.drawText(Evo_extrasClient.instance.textRenderer, Text.literal(String.format("x%s", (double) Math.round(scale * 10) / 10)),
+                    getX(), getY() - 10, 0xFFFFFFFF, true); // отображение размера виджета atm
+        }
+
+        this.width = (int) (baseWidth * scale);
+        this.height = (int) (baseHeight * scale); // устанавливается размер ВИДЖЕТА(ClickableWidget), АКА кликабельная зона
+
+        context.enableScissor(getX(), getY(), getX() + width, getY() + height);
+
+        context.getMatrices().push();
+        context.getMatrices().translate(-((float) scale-1) * getX(), -((float) scale-1) * getY(), 0); // смещается матрица чтоб нормально
+        context.getMatrices().scale((float) scale, (float) scale, 1); // скейлинг
+
         int rx = (int) Math.round(x);
         int ry = (int) Math.round(y);
 
@@ -60,6 +81,11 @@ public abstract class WWidget extends ClickableWidget {
             contextBuilder.draw(context);
 
         }
+
+        context.getMatrices().pop();
+
+        context.disableScissor();
+
 
         //
     }
@@ -84,7 +110,7 @@ public abstract class WWidget extends ClickableWidget {
         if(hidden) return;
         if(widgetScreen == null) return;
         int bgColor = isHovered() ? 0x80bebebe : 0x808a8a8a;
-        context.fill(getX(), getY(), getX()+width, getY()+height, bgColor);
+        context.fill(getX(), getY(), getX()+baseWidth, getY()+baseHeight, bgColor);
     }
 
 
@@ -118,12 +144,30 @@ public abstract class WWidget extends ClickableWidget {
             contextBuilder.updateBar(index, value, min, max);
         }
     }
+
+    public void resize(double amount) {
+        float delta = (float) Math.signum(amount) * 0.1f; //0.1ф - шаг
+        scale = loadScale();
+        double newScale = Math.max(0.3, Math.min(5.0, scale + delta));
+        if(newScale != scale) {
+            scale = newScale;
+            saveScale(newScale);
+        }
+    }
+
+    protected abstract void saveScale(double scale);
+    protected abstract double loadScale();
+    public void setScale(double scale) { this.scale = scale; } // !!! ставит скейл для худ виджета, ничего не сохраняет и не подгружает
+
     public int getWidth() {
         return width;
     }
     public int getHeight() {
         return height;
     }
+
+    protected void setBaseWidth(int width) { this.baseWidth = width; }
+    protected void setBaseHeight(int height) { this.baseHeight = height; }
 
 
 

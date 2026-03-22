@@ -19,7 +19,6 @@ public class ContextBuilder {
     private int y;
     private int width;
     private int height;
-    private final int scale;
     private final boolean background;
 
     //кеш)
@@ -32,12 +31,15 @@ public class ContextBuilder {
         this.texturesList = new ArrayList<>(builder.texturesList);
         this.textList = new ArrayList<>(builder.textList);
         this.barList = new ArrayList<>(builder.barList);
+
         this.padding = builder.padding;
+
         this.x = builder.x;
         this.y = builder.y;
+
         this.width = builder.width;
         this.height = builder.height;
-        this.scale = builder.scale;
+
         this.background = builder.background;
 
         this.cachedLines = new String[textList.size()];
@@ -130,7 +132,6 @@ public class ContextBuilder {
             context.fill(x, y, x+width, y+height, Config.widgetBg);
         }
 
-        context.enableScissor(x, y, x+width, y+height);
 
         for(WTexture icon : texturesList) {
             if (icon != null) {
@@ -156,8 +157,6 @@ public class ContextBuilder {
             context.fill(bx, by, bx+bar.getValue(), by+bar.getHeight(), bar.getFrontColor()); //сам бар
         }
 
-
-        context.disableScissor();
     }
 
     private void renderTexture(DrawContext context, WTexture icon) {
