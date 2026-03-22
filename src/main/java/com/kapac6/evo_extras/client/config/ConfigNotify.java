@@ -9,7 +9,7 @@ import com.teamresourceful.resourcefulconfig.api.annotations.ConfigOption;
 public class ConfigNotify {
 
     @ConfigOption.Separator(
-            value = "Звуковое уведомление при респавне босса",
+            value = "§bЗвуковое уведомление при респавне босса",
             description = "§cТребует включенные уведомления о боссе в EvoPlus\n§cНа данный момент не работает с модом c2me"
     )
     @ConfigEntry(

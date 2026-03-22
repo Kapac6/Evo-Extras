@@ -5,7 +5,7 @@ import com.teamresourceful.resourcefulconfig.api.annotations.*;
 @Category("Руны")
 public class ConfigRunes {
     @ConfigOption.Separator(
-            value = "Длительность активных рун",
+            value = "§bДлительность активных рун",
             description = "Полоса, отображающая оставшееся время действия руны"
     )
     @ConfigEntry(

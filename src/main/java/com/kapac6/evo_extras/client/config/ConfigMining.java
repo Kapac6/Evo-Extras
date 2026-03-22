@@ -7,7 +7,7 @@ import com.teamresourceful.resourcefulconfig.api.annotations.*;
 public class ConfigMining {
 
     @ConfigOption.Separator(
-            value = "Счетчик денег в час",
+            value = "§bСчетчик денег в час",
             description = "Считает примерное количество блоков/денег в час"
     )
     @ConfigEntry(
@@ -58,7 +58,7 @@ public class ConfigMining {
     };
 
     @ConfigOption.Separator(
-            value = "Список локальных бустеров",
+            value = "§bСписок локальных бустеров",
             description = "Показывает активные локальные бустеры в виде списка"
     )
     @ConfigEntry(
