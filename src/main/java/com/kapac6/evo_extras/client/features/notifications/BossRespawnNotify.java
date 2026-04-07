@@ -10,13 +10,15 @@ import java.util.regex.Pattern;
 
 public class BossRespawnNotify {
 
-    static Pattern respawnPattern = Pattern.compile("§.\\[§.Evo§.Plus§.]§. §..+ §.возродился");
+    static Pattern evoplusPattern = Pattern.compile("§.\\[§.Evo§.Plus§.]§. §..+ §.возродился");
+    static Pattern vanillaPattern = Pattern.compile("Босс ..+ появился.");
     public void getMessage(Text text, boolean overlay) {
         String msg = text.getString();
 
-        if(ConfigNotify.bossSoundNotifyToggle && msg.startsWith("§7[§bEvo§fPlus§7]")) {
-            Matcher matcher = respawnPattern.matcher(msg);
-            if(matcher.find()) {
+        if(ConfigNotify.bossSoundNotifyToggle && (msg.startsWith("§7[§bEvo§fPlus§7]") || msg.startsWith("Босс"))) {
+            Matcher matcher1 = evoplusPattern.matcher(msg);
+            Matcher matcher2 = vanillaPattern.matcher(msg);
+            if(matcher1.find() || matcher2.find()) {
                 if(Evo_extrasClient.instance.player == null) return;
                 Evo_extrasClient.instance.player.playSound(SoundEvents.BOSSRESPAWN, (float) ConfigNotify.bossSoundNotifyVolume /100, 1f);
             }

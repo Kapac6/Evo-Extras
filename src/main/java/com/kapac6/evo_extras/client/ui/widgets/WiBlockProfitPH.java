@@ -37,8 +37,8 @@ public class WiBlockProfitPH extends WWidget {
                     .addTexture(TEXTURE, 0, 0, true, width, height, TEXTURE_SIZE)
                     .setPadding(PADDING)
                     .addLine(Text.literal("Время: 0"), 0xFFFFFFFF, TEXTURE_SIZE+1, 1, true)
-                    .addLine(Text.literal("В час: §b0§f\uE128 §f/ §a0§f\uE135 §f/ §d0§f\uE365"), 0xFFFFFFFF, TEXTURE_SIZE+1, 1, true)
-                    .addLine(Text.literal("Накопано: §b0§f\uE128 §f/ §a0§f\uE135 §f/ §d0§f\uE365"), 0xFFFFFFFF, TEXTURE_SIZE+1, 1, true)
+                    .addLine(Text.literal("В час: §b0§f\uE127 §f/ §a0§f\uE135 §f/ §d0§f\uE365"), 0xFFFFFFFF, TEXTURE_SIZE+1, 1, true)
+                    .addLine(Text.literal("Накопано: §b0§f\uE127 §f/ §a0§f\uE135 §f/ §d0§f\uE365"), 0xFFFFFFFF, TEXTURE_SIZE+1, 1, true)
                     .setX(getX())
                     .setY(getY())
                     .setScale(1)
@@ -77,12 +77,12 @@ public class WiBlockProfitPH extends WWidget {
             updateLine(0, Text.literal(String.format("Время: %s",
                     TimeUtils.asTextTime(blockProfitPH.uptime))));
 
-            updateLine(1, Text.literal(String.format("В час: §b%s§f\uE128 §f/ §a%s§f\uE135 §f/ §d%s§f\uE365",
+            updateLine(1, Text.literal(String.format("В час: §b%s§f\uE127 §f/ §a%s§f\uE135 §f/ §d%s§f\uE365",
                     MoneyUtils.convertTo(blockProfitPH.BlocksPerHour),
                     MoneyUtils.convertTo(blockProfitPH.MoneyPerHour),
                     MoneyUtils.convertTo(blockProfitPH.ShardsPerHour))));
 
-            updateLine(2, Text.literal(String.format("Накопано: §b%s§f\uE128 §f/ §a%s§f\uE135 §f/ §d%s§f\uE365",
+            updateLine(2, Text.literal(String.format("Накопано: §b%s§f\uE127 §f/ §a%s§f\uE135 §f/ §d%s§f\uE365",
                     MoneyUtils.convertTo(blockProfitPH.totalBrokenBlocks),
                     MoneyUtils.convertTo(blockProfitPH.totalMoney),
                     MoneyUtils.convertTo(blockProfitPH.totalShards))));

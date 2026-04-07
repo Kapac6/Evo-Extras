@@ -10,7 +10,7 @@ public class ConfigNotify {
 
     @ConfigOption.Separator(
             value = "§bЗвуковое уведомление при респавне босса",
-            description = "§cТребует включенные уведомления о боссе в EvoPlus\n§cНа данный момент не работает с модом c2me"
+            description = "§cТребует платный таймер ИЛИ включенные уведомления о боссе в EvoPlus\nВ чате должно быть уведомление о спавне для работы\n§cНа данный момент не работает с модом c2me"
     )
     @ConfigEntry(
             id = "bossSoundNotifyToggle",

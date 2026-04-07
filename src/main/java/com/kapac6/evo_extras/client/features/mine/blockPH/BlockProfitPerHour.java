@@ -76,6 +76,7 @@ public class BlockProfitPerHour implements ClientPlayerBlockBreakEvents.After {
             } else {
                 latestActionBar = price; // если норм то пушить
                 latestActionBarTimeout = 0;
+                paused = false;
             }
             if(latestBreak <= maxLatestBreak) paused = false; // снятие с паузы только если капнул кеш на счёт
             // TODO: сделать переключение снятия паузы в кфг (снять при копании / снять при деньги) ЧТОБЫ чел без доната мог фиксировать блоки/шарды в час

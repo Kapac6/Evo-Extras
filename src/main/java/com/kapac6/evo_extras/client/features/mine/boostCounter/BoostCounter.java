@@ -14,9 +14,9 @@ public class BoostCounter {
         if(overlay) return;
         String msg = text.getString();
         if(msg.startsWith("Вы получили локальный бустер")) {
-            Matcher matcher = boostPattern.matcher(msg);
+            Matcher matcher = boostPattern.matcher(msg.replace(',', '.'));
             if(matcher.find()) {
-                String type = matcher.group(1).equals("денег") ? "\uE135" : "\uE365";
+                String type = matcher.group(1).equalsIgnoreCase("денег") ? "\uE135" : "\uE365";
                 boostList.add(new Boost(type, Integer.parseInt(matcher.group(3))*60*1000, Double.parseDouble(matcher.group(2))));
             }
         }
