@@ -41,57 +41,57 @@ public class ConfigRunes {
     public static int runeDurationWidgetFrontColor = -53455108;
 
 
-    @Comment("0 - отключение")
-    @ConfigOption.Range(min = 0, max = 3)
+    @Comment("Начиная с сезона 27 у способностей больше нет названий, поэтому указывайте длительность вручную")
+    @ConfigOption.Range(min = 1, max = 15)
     @ConfigEntry(
-            id = "runeNinjaLevel",
-            translation = "Уровень руны \"Ниндзя\""
+            id = "runeDuration",
+            translation = "Длительность активной руны"
     )
-    public static int runeNinjaLevel = 0;
+    public static int runeDuration = 5;
 
-
-    @Comment("0 - отключение")
-    @ConfigOption.Range(min = 0, max = 3)
-    @ConfigEntry(
-            id = "runeSadistLevel",
-            translation = "Уровень руны \"Садист\""
-    )
-    public static int runeSadistLevel = 0;
-
-
-    @Comment("0 - отключение")
-    @ConfigOption.Range(min = 0, max = 3)
-    @ConfigEntry(
-            id = "runeBesLevel",
-            translation = "Уровень руны \"Бес\""
-    )
-    public static int runeBesLevel = 0;
-
-
-    @Comment("0 - отключение")
-    @ConfigOption.Range(min = 0, max = 3)
-    @ConfigEntry(
-            id = "runeMortusLevel",
-            translation = "Уровень руны \"Мортус\""
-    )
-    public static int runeMortusLevel = 0;
-
-
-    @Comment("0 - отключение")
-    @ConfigOption.Range(min = 0, max = 3)
-    @ConfigEntry(
-            id = "runeTempusLevel",
-            translation = "Уровень руны \"Темпус\""
-    )
-    public static int runeTempusLevel = 0;
-
-
-    @Comment("0 - отключение")
-    @ConfigOption.Range(min = 0, max = 3)
-    @ConfigEntry(
-            id = "runeSilenceLevel",
-            translation = "Уровень руны \"Тишина\""
-    )
-    public static int runeSilenceLevel = 0;
+//
+//    @Comment("0 - отключение")
+//    @ConfigOption.Range(min = 0, max = 3)
+//    @ConfigEntry(
+//            id = "runeSadistLevel",
+//            translation = "Уровень руны \"Садист\""
+//    )
+//    public static int runeSadistLevel = 0;
+//
+//
+//    @Comment("0 - отключение")
+//    @ConfigOption.Range(min = 0, max = 3)
+//    @ConfigEntry(
+//            id = "runeBesLevel",
+//            translation = "Уровень руны \"Бес\""
+//    )
+//    public static int runeBesLevel = 0;
+//
+//
+//    @Comment("0 - отключение")
+//    @ConfigOption.Range(min = 0, max = 3)
+//    @ConfigEntry(
+//            id = "runeMortusLevel",
+//            translation = "Уровень руны \"Мортус\""
+//    )
+//    public static int runeMortusLevel = 0;
+//
+//
+//    @Comment("0 - отключение")
+//    @ConfigOption.Range(min = 0, max = 3)
+//    @ConfigEntry(
+//            id = "runeTempusLevel",
+//            translation = "Уровень руны \"Темпус\""
+//    )
+//    public static int runeTempusLevel = 0;
+//
+//
+//    @Comment("0 - отключение")
+//    @ConfigOption.Range(min = 0, max = 3)
+//    @ConfigEntry(
+//            id = "runeSilenceLevel",
+//            translation = "Уровень руны \"Тишина\""
+//    )
+//    public static int runeSilenceLevel = 0;
 
 }
