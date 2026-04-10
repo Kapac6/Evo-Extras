@@ -1,5 +1,6 @@
 package com.kapac6.evo_extras.client;
 
+import com.kapac6.evo_extras.client.chat.ChatTabManager;
 import com.kapac6.evo_extras.client.config.Config;
 import com.kapac6.evo_extras.client.config.ConfigAutoclicker;
 import com.kapac6.evo_extras.client.config.Hidden.HudConfig;
@@ -69,6 +70,7 @@ public class Evo_extrasClient implements ClientModInitializer {
         evoClient = this;
 
         configurator.register(Config.class);
+        ChatTabManager.getInstance();
 
         /*
         * БИНДЫ

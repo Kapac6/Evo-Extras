@@ -6,7 +6,9 @@
   "mixins": [
   ],
   "client": [
-    "ActionBarMixin"
+    "ActionBarMixin",
+    "ChatHudMixin",
+    "ChatScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1
