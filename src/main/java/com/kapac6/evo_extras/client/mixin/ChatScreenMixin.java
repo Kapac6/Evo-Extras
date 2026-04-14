@@ -40,9 +40,14 @@ public abstract class ChatScreenMixin extends Screen {
         // вкладки
         for (ChatTab tab : manager.getTabs()) {
             TabButton btn = new TabButton(x, y, tab,
-                    (button) -> {
-                        manager.setActiveTab(tab);
+                    (button) -> { //лкм
+                        if(Screen.hasShiftDown()) {
+                            manager.setBannedTab(tab);
+                        } else {
+                            manager.setActiveTab(tab);
+                        }
                         updateTabs();
+
                     });
             addDrawableChild(btn);
             tabButtons.add(btn);
@@ -86,9 +91,11 @@ public abstract class ChatScreenMixin extends Screen {
 
     @Unique
     private void updateTabs() {
-        ChatTab active = ChatTabManager.getInstance().getActiveTab();
+        ChatTabManager manager = ChatTabManager.getInstance();
+        ChatTab active = manager.getActiveTab();
         for (TabButton btn : tabButtons) {
             btn.setActive(btn.getTab() == active);
+            btn.setBanned(manager.isBanned(btn.getTab()));
         }
     }
 

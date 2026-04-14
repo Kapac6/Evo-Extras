@@ -4,7 +4,7 @@ import net.minecraft.text.Text;
 
 import java.util.List;
 
-public record ChatTab(String name, List<String> startsWithFilters, int color, int hoveredColor, int selectedColor) {
+public record ChatTab(String name, List<String> startsWithFilters, int color, int hoveredColor, int selectedColor, int bannedColor) {
 
     public boolean matches(Text message) {
         if (startsWithFilters.isEmpty()) {

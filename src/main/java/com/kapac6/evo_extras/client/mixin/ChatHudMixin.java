@@ -32,7 +32,7 @@ public abstract class ChatHudMixin {
     @Inject(method = "addVisibleMessage", at = @At("HEAD"), cancellable = true)
     private void onAddVisibleMessage(ChatHudLine message, CallbackInfo ci) {
         ChatTabManager manager = ChatTabManager.getInstance();
-        if (!manager.getActiveTab().getFilter().isEmpty() && !manager.shouldDisplayMessage(message.content())) {
+        if (!manager.shouldDisplayMessage(message.content())) {
             ci.cancel();
         }
     }
@@ -47,7 +47,7 @@ public abstract class ChatHudMixin {
         Collections.reverse(reversed);
 
         for (ChatHudLine line : reversed) {
-            if (manager.getActiveTab().getFilter().isEmpty() ||
+            if ((manager.getActiveTab().getFilter().isEmpty() && manager.getBannedSize() == 0) ||
                     manager.shouldDisplayMessage(line.content())) {
                 addVisibleMessageUnfiltered(line);
             }
