@@ -171,6 +171,12 @@ public class Evo_extrasClient implements ClientModInitializer {
                 eventBlockProfitPerHour.reset();
             }
 
+            while (SeeThroughBind.wasPressed()) {
+                ConfigVisual.seeThroughWindowToggle = !ConfigVisual.seeThroughWindowToggle;
+
+//                Evo_extrasClient.logger.info("//////////POINTS: " + ClanPoints.getPoints());
+            }
+
 
             Clicker.AutoClickerTick(instance, true); // кликер
 

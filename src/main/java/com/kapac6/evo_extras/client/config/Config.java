@@ -12,6 +12,7 @@ import com.teamresourceful.resourcefulconfig.api.annotations.*;
                 ConfigMining.class,
                 ConfigRunes.class,
                 ConfigNotify.class,
+                ConfigChat.class,
                 HudConfig.class
 
         }
