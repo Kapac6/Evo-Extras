@@ -94,9 +94,9 @@ public class WiBoostCounter extends WWidget {
                     height += 10;
 
                     if(boost.type.equals("\uE135")) {
-                        totalMoneyBoost += boost.boost;
+                        totalMoneyBoost += boost.boost-1;
                     } else {
-                        totalShardBoost += boost.boost;
+                        totalShardBoost += boost.boost-1;
                     }
 
                     builder.addLine(Text.literal(String.format("§f%s §e[%s]§f %s", boost.type, boost.boost, TimeUtils.asShortTextTime(boost.getTimeLeft())))
@@ -105,6 +105,7 @@ public class WiBoostCounter extends WWidget {
                 }
                 this.contextBuilder = builder.setWidth(width).setHeight(height).build();
                 setBaseHeight(height);
+                totalMoneyBoost = Math.round(totalMoneyBoost*100d)/100d;
             } else {
                 int index = 1;
                 List<Boost> clonedList = new ArrayList<>(boostCounter.boostList);

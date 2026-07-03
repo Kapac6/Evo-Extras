@@ -39,7 +39,8 @@ public class BlockProfitPerHour implements ClientPlayerBlockBreakEvents.After {
     public long ShardsPerHour = 0;
 
 
-    static Pattern moneyPattern = Pattern.compile("(\\d+\\.\\d+\\w)");
+    static Pattern moneyPattern = Pattern.compile("(\\d+\\.?\\d*\\w?)"); // OLD: (\d+\.\d+\w) NEW: (\d+\.?\d*\w?)
+    static Pattern actionBarPattern = Pattern.compile("\\+(\\d+\\.?\\d*\\w?)\\$"); // OLD: \+(\d+\.\d+\w) NEW: \+(\d+\.?\d*\w?)\$
     static Pattern shardMultiplierPattern = Pattern.compile("(\\d+)");
     @Override
     public void afterBlockBreak(ClientWorld world, ClientPlayerEntity playerEntity, BlockPos blockPos, BlockState blockState) {
@@ -67,10 +68,10 @@ public class BlockProfitPerHour implements ClientPlayerBlockBreakEvents.After {
     public void updateActionBar(Text text) {
         if(text.toString() == null) return;
         if(ConfigMining.bphWidgetOnlyBlocks) return;
-        Matcher matchingText = moneyPattern.matcher(text.toString());
+        Matcher matchingText = actionBarPattern.matcher(text.toString());
         if(matchingText.find()) {
 
-            long price = MoneyUtils.convertFrom(matchingText.group());
+            long price = MoneyUtils.convertFrom(matchingText.group(1));
             if(price / 10 > latestActionBar && latestActionBarTimeout < 10) { // если цена с акшнбара сказочно высокая
                 latestActionBarTimeout++; // забить хуй
             } else {
@@ -109,7 +110,7 @@ public class BlockProfitPerHour implements ClientPlayerBlockBreakEvents.After {
         if(found) {
             Matcher matchingText = moneyPattern.matcher(text.toString());
             if(matchingText.find()) {
-                long price = MoneyUtils.convertFrom(matchingText.group());
+                long price = MoneyUtils.convertFrom(matchingText.group(1));
                 totalMoney += price;
 
                 latestActionBarTimeout = 0;
@@ -137,13 +138,17 @@ public class BlockProfitPerHour implements ClientPlayerBlockBreakEvents.After {
             found = true;
 
         } else
-        if(Arrays.asList(ConfigMining.bphWidgetAllowed).contains(ConfigMining.bphAllowEnum.WANDS) && msg.startsWith("Вы сломали")) {
-            found = true;
+        if(msg.startsWith("Вы сломали")) {
+            if((Arrays.asList(ConfigMining.bphWidgetAllowed).contains(ConfigMining.bphAllowEnum.RUNES) && msg.contains("руны")) ||
+                    Arrays.asList(ConfigMining.bphWidgetAllowed).contains(ConfigMining.bphAllowEnum.WANDS)) found = true;
 
         } else
         if(Arrays.asList(ConfigMining.bphWidgetAllowed).contains(ConfigMining.bphAllowEnum.MULTITOOL) && (
                 msg.startsWith("Сокрушающий меч разрубил") ||
-                msg.startsWith("Залп стрел"))) {
+                msg.startsWith("Залп стрел") ||
+                msg.startsWith("Пожиратель блоков прокатился") ||
+                msg.startsWith("Чёрная дыра поглотила"))) {
+
             found = true;
 
         }

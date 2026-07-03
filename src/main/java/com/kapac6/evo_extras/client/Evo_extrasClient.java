@@ -99,6 +99,7 @@ public class Evo_extrasClient implements ClientModInitializer {
         runeDurationBar = new RuneDurationBar();
         bossRespawnNotify = new BossRespawnNotify();
         boostCounter = new BoostCounter();
+//        ClanPoints.init(MODID);
 
 
 
@@ -134,6 +135,7 @@ public class Evo_extrasClient implements ClientModInitializer {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if(System.currentTimeMillis() - latestSecond.get() >= 1000) { // раз в секунду вызывает всякое
                 eventBlockProfitPerHour.second();
+
                 latestSecond.set(System.currentTimeMillis());
             }
 

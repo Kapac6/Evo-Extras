@@ -36,6 +36,8 @@ import com.teamresourceful.resourcefulconfig.api.annotations.*;
 )
 public class Config {
 
+
+    @Comment(value = "§cДВИГАТЬ ВИДЖЕТЫ ТУТ ----------------------->\n§cДВИГАТЬ ВИДЖЕТЫ ТУТ ----------------------->\n§cДВИГАТЬ ВИДЖЕТЫ ТУТ ----------------------->")
     @ConfigButton(text = "Открыть", title = "Открыть меню редактирования виджетов")
     public static final Runnable editWidgetsButton = () -> {
         Evo_extrasClient.instance.setScreen(new WidgetScreen());

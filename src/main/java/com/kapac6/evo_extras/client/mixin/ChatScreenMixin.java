@@ -3,6 +3,7 @@ package com.kapac6.evo_extras.client.mixin;
 import com.kapac6.evo_extras.client.chat.ChatPrefix;
 import com.kapac6.evo_extras.client.chat.ChatTab;
 import com.kapac6.evo_extras.client.chat.ChatTabManager;
+import com.kapac6.evo_extras.client.config.ConfigChat;
 import com.kapac6.evo_extras.client.ui.elements.chat.PrefixButton;
 import com.kapac6.evo_extras.client.ui.elements.chat.TabButton;
 import net.minecraft.client.gui.screen.ChatScreen;
@@ -33,8 +34,9 @@ public abstract class ChatScreenMixin extends Screen {
 
     @Inject(method = "init", at = @At("RETURN"))
     private void onInit(CallbackInfo ci) {
+        if(!ConfigChat.chatTabsToggle) return;
         ChatTabManager manager = ChatTabManager.getInstance();
-        int x = 2;
+        int x = 2 + ConfigChat.chatTabsXOffset;
         int y = this.height - 26;
 
         // вкладки
@@ -80,6 +82,7 @@ public abstract class ChatScreenMixin extends Screen {
 
     @Inject(method = "sendMessage", at = @At("HEAD"), cancellable = true)
     private void onSendMessage(String chatText, boolean addToHistory, CallbackInfo ci) {
+        if(!ConfigChat.chatTabsToggle) return;
         ChatPrefix prefix = ChatTabManager.getInstance().getCurrentPrefix();
         if (prefix != ChatPrefix.NONE) {
             String prefixStr = prefix.get();

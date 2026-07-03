@@ -1,6 +1,7 @@
 package com.kapac6.evo_extras.client.event;
 
 import com.kapac6.evo_extras.client.Evo_extrasClient;
+import com.kapac6.evo_extras.client.features.clan.clanpoints.ClanPoints;
 import com.kapac6.evo_extras.client.features.mine.blockPH.BlockProfitPerHour;
 import com.kapac6.evo_extras.client.features.runes.RuneDurationBar;
 import net.fabricmc.fabric.api.client.message.v1.ClientReceiveMessageEvents;
@@ -13,5 +14,6 @@ public class ChatGameEvent implements ClientReceiveMessageEvents.Game {
         RuneDurationBar.getInstance().getMessage(text, b);
         Evo_extrasClient.bossRespawnNotify.getMessage(text, b);
         Evo_extrasClient.boostCounter.getMessage(text, b);
+//        ClanPoints.getMessage(text, b);
     }
 }
