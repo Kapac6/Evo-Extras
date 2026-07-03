@@ -47,6 +47,11 @@ public class Evo_extrasClient implements ClientModInitializer {
 
     private static final KeyBinding ClickerBind = new KeyBinding("Автокликер", GLFW.GLFW_KEY_UNKNOWN, "Evo Extras");
     private static final KeyBinding ConfigBind = new KeyBinding("Открыть меню", GLFW.GLFW_KEY_INSERT, "Evo Extras");
+    private static final KeyBinding BPHPauseBind = new KeyBinding("Пауза на счетчике денег", GLFW.GLFW_KEY_UNKNOWN, "Evo Extras");
+    private static final KeyBinding BPHResetBind = new KeyBinding("Сбросить счетчик денег", GLFW.GLFW_KEY_UNKNOWN, "Evo Extras");
+
+    // я должен переделать весь этот мусор ^^^
+
     //private static final KeyBinding TestBind = new KeyBinding("Тест", GLFW.GLFW_KEY_G, "Evo Extras");
 
     public static MinecraftClient instance;
@@ -79,6 +84,8 @@ public class Evo_extrasClient implements ClientModInitializer {
         KeyBindingHelper.registerKeyBinding(ConfigBind);
         KeyBindingHelper.registerKeyBinding(ClickerBind);
         //KeyBindingHelper.registerKeyBinding(TestBind);
+        KeyBindingHelper.registerKeyBinding(BPHPauseBind);
+        KeyBindingHelper.registerKeyBinding(BPHResetBind);
 
 
 
@@ -154,6 +161,14 @@ public class Evo_extrasClient implements ClientModInitializer {
 
             while (ConfigBind.wasPressed()) { // открытие меню по бинду
                 instance.setScreen(ResourcefulConfigScreen.getFactory(MODID).apply(null));
+            }
+
+            while (BPHPauseBind.wasPressed()) {
+                eventBlockProfitPerHour.pauseBind();
+            }
+
+            while (BPHResetBind.wasPressed()) {
+                eventBlockProfitPerHour.reset();
             }
 
 

@@ -45,10 +45,13 @@ public class BlockProfitPerHour implements ClientPlayerBlockBreakEvents.After {
     @Override
     public void afterBlockBreak(ClientWorld world, ClientPlayerEntity playerEntity, BlockPos blockPos, BlockState blockState) {
         if(ConfigMining.bphWidgetOnlyBlocks || (latestActionBarTime <= maxLatestActionBar && !paused)) {
+            if(ConfigMining.bphWidgetAutoPause) {
+                paused = false;
+            }
             totalBrokenBlocks++;
             latestBreak = 0;
         }
-        if(!ConfigMining.bphWidgetOnlyBlocks) {
+        if(!ConfigMining.bphWidgetOnlyBlocks && Arrays.asList(ConfigMining.bphWidgetAllowed).contains(ConfigMining.bphAllowEnum.BLOCKS)) {
             addMoney();
         }
     }
@@ -77,10 +80,8 @@ public class BlockProfitPerHour implements ClientPlayerBlockBreakEvents.After {
             } else {
                 latestActionBar = price; // если норм то пушить
                 latestActionBarTimeout = 0;
-                paused = false;
             }
-            if(latestBreak <= maxLatestBreak) paused = false; // снятие с паузы только если капнул кеш на счёт
-            // TODO: сделать переключение снятия паузы в кфг (снять при копании / снять при деньги) ЧТОБЫ чел без доната мог фиксировать блоки/шарды в час
+            if(latestBreak <= maxLatestBreak && ConfigMining.bphWidgetAutoPause) paused = false; // снятие с паузы только если капнул кеш на счёт
             latestActionBarTime = 0; // время действия этого акшнбара
         }
     }
@@ -90,19 +91,21 @@ public class BlockProfitPerHour implements ClientPlayerBlockBreakEvents.After {
         String msg = text.getString();
 
         if(msg.startsWith("Вы нашли шард!")) {
-            if(msg.length() > 14) { // если Вы нашли шард! x5; если умножается короче
-                Matcher matcher = shardMultiplierPattern.matcher(msg);
-                if(matcher.find()) {
-                    totalShards += Integer.parseInt(matcher.group());
-                }
-            } else {
-                totalShards++;
-            }
-
 
             latestActionBarTimeout = 0;
             latestBreak = 0;
-            paused = false;
+            if(ConfigMining.bphWidgetAutoPause) paused = false;
+
+            if(!paused) {
+                if (msg.length() > 14) { // если Вы нашли шард! x5; если умножается короче
+                    Matcher matcher = shardMultiplierPattern.matcher(msg);
+                    if (matcher.find(1)) {
+                        totalShards += Integer.parseInt(matcher.group(1));
+                    }
+                } else {
+                    totalShards++;
+                }
+            }
         }
 
 
@@ -165,18 +168,24 @@ public class BlockProfitPerHour implements ClientPlayerBlockBreakEvents.After {
         return Evo_extrasClient.eventBlockProfitPerHour;
     }
 
+    public void pauseBind() {
+        if(!ConfigMining.bphWidgetAutoPause) {
+            paused = !paused;
+        }
+    }
+
     public void second() { //добавляет секунду сюда
         if(paused) return;
 
         latestBreak += 1000;
         latestActionBarTime += 1000;
 
-        if((!ConfigMining.bphWidgetOnlyBlocks && (latestBreak > maxLatestBreak || latestActionBarTime > maxLatestActionBar))
-                || (ConfigMining.bphWidgetOnlyBlocks && latestBreak > maxLatestBreak)) {
-            paused = true;
-        } else {
-            uptime += 1000;
-        }
+        if(ConfigMining.bphWidgetAutoPause) {
+            if ((!ConfigMining.bphWidgetOnlyBlocks && (latestBreak > maxLatestBreak || latestActionBarTime > maxLatestActionBar))
+                    || (ConfigMining.bphWidgetOnlyBlocks && latestBreak > maxLatestBreak)) {
+                paused = true;
+            } else uptime += 1000;
+        } else uptime += 1000;
 
         BlocksPerHour = (long) Math.floor(((double) totalBrokenBlocks) / ((double) uptime / (1000 * 60 * 60)));
         MoneyPerHour = (long) Math.floor(((double) totalMoney) / ((double) uptime / (1000 * 60 * 60)));

@@ -27,6 +27,12 @@ public class ConfigMining {
     public static boolean bphWidgetOnlyBlocks = false;
 
     @ConfigEntry(
+            id = "bphWidgetAutoPause",
+            translation = "Автоматическая пауза через 10 секунд без копания"
+    )
+    public static boolean bphWidgetAutoPause = true;
+
+    @ConfigEntry(
             id = "bphWidgetAllowed",
             translation = "Учитывать в счетчике"
     )
@@ -34,11 +40,12 @@ public class ConfigMining {
     public static bphAllowEnum[] bphWidgetAllowed = bphAllowEnum.values();
 
     public enum bphAllowEnum {
-        BARRELS, RUNES, BOMBS, PETS, WANDS, MULTITOOL;
+        BLOCKS, BARRELS, RUNES, BOMBS, PETS, WANDS, MULTITOOL;
 
         @Override
         public String toString() {
             return switch (this) {
+                case BLOCKS -> "Блоки";
                 case BARRELS -> "Бочки";
                 case RUNES -> "Руны";
                 case BOMBS -> "Бомбочки";
