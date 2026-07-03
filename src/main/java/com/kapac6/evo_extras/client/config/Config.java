@@ -13,6 +13,7 @@ import com.teamresourceful.resourcefulconfig.api.annotations.*;
                 ConfigRunes.class,
                 ConfigNotify.class,
                 ConfigChat.class,
+                ConfigVisual.class,
                 HudConfig.class
 
         }

@@ -3,14 +3,17 @@ package com.kapac6.evo_extras.client;
 import com.kapac6.evo_extras.client.chat.ChatTabManager;
 import com.kapac6.evo_extras.client.config.Config;
 import com.kapac6.evo_extras.client.config.ConfigAutoclicker;
+import com.kapac6.evo_extras.client.config.ConfigVisual;
 import com.kapac6.evo_extras.client.config.Hidden.HudConfig;
 import com.kapac6.evo_extras.client.event.ChatGameEvent;
 import com.kapac6.evo_extras.client.event.SoundEvents;
 import com.kapac6.evo_extras.client.features.autoclicker.Clicker;
+import com.kapac6.evo_extras.client.features.clan.clanpoints.ClanPoints;
 import com.kapac6.evo_extras.client.features.mine.blockPH.BlockProfitPerHour;
 import com.kapac6.evo_extras.client.features.mine.boostCounter.BoostCounter;
 import com.kapac6.evo_extras.client.features.notifications.BossRespawnNotify;
 import com.kapac6.evo_extras.client.features.runes.RuneDurationBar;
+import com.kapac6.evo_extras.client.features.visual.SeeThrough;
 import com.kapac6.evo_extras.client.ui.WidgetScreen;
 import com.kapac6.evo_extras.client.ui.widgets.WiBlockProfitPH;
 import com.kapac6.evo_extras.client.ui.widgets.WWidget;
@@ -49,6 +52,7 @@ public class Evo_extrasClient implements ClientModInitializer {
     private static final KeyBinding ConfigBind = new KeyBinding("Открыть меню", GLFW.GLFW_KEY_INSERT, "Evo Extras");
     private static final KeyBinding BPHPauseBind = new KeyBinding("Пауза на счетчике денег", GLFW.GLFW_KEY_UNKNOWN, "Evo Extras");
     private static final KeyBinding BPHResetBind = new KeyBinding("Сбросить счетчик денег", GLFW.GLFW_KEY_UNKNOWN, "Evo Extras");
+    private static final KeyBinding SeeThroughBind = new KeyBinding("Прозрачность окна", GLFW.GLFW_KEY_UNKNOWN, "Evo Extras");
 
     // я должен переделать весь этот мусор ^^^
 
@@ -83,9 +87,9 @@ public class Evo_extrasClient implements ClientModInitializer {
 
         KeyBindingHelper.registerKeyBinding(ConfigBind);
         KeyBindingHelper.registerKeyBinding(ClickerBind);
-        //KeyBindingHelper.registerKeyBinding(TestBind);
         KeyBindingHelper.registerKeyBinding(BPHPauseBind);
         KeyBindingHelper.registerKeyBinding(BPHResetBind);
+        KeyBindingHelper.registerKeyBinding(SeeThroughBind);
 
 
 
@@ -106,6 +110,7 @@ public class Evo_extrasClient implements ClientModInitializer {
         runeDurationBar = new RuneDurationBar();
         bossRespawnNotify = new BossRespawnNotify();
         boostCounter = new BoostCounter();
+        ConfigVisual.seeThroughWindowToggle = false;
 //        ClanPoints.init(MODID);
 
 
@@ -147,6 +152,11 @@ public class Evo_extrasClient implements ClientModInitializer {
             }
 
             if(System.currentTimeMillis() - latest100.get() >= 100) { // раз в 100 мс (2 майн тика) вызывает всякое
+
+                if(ConfigVisual.seeThroughWindowToggle) {
+                    SeeThrough.setOpacity(ConfigVisual.seeThroughAlpha);
+                } else SeeThrough.setOpacity((byte) 100);
+
                 latest100.set(System.currentTimeMillis());
             }
 
