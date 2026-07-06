@@ -39,8 +39,8 @@ public class BlockProfitPerHour implements ClientPlayerBlockBreakEvents.After {
     public long ShardsPerHour = 0;
 
 
-    static Pattern moneyPattern = Pattern.compile("(\\d+\\.?\\d*\\w?)"); // OLD: (\d+\.\d+\w) NEW: (\d+\.?\d*\w?)
-    static Pattern actionBarPattern = Pattern.compile("\\+(\\d+\\.?\\d*\\w?)\\$"); // OLD: \+(\d+\.\d+\w) NEW: \+(\d+\.?\d*\w?)\$
+    static Pattern moneyPattern = Pattern.compile("(\\d+\\.\\d+\\w)"); // OLD: (\d+\.\d+\w) NEW: (\d+\.?\d*\w?)
+    static Pattern actionBarPattern = Pattern.compile("\\+(\\d+\\.\\d+\\w)"); // OLD: \+(\d+\.\d+\w) NEW: \+(\d+\.?\d*\w?)\$
     static Pattern shardMultiplierPattern = Pattern.compile("(\\d+)");
     @Override
     public void afterBlockBreak(ClientWorld world, ClientPlayerEntity playerEntity, BlockPos blockPos, BlockState blockState) {

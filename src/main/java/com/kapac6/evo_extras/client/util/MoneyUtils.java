@@ -4,17 +4,21 @@ import java.util.Locale;
 
 public class MoneyUtils {
     public static long convertFrom(String msg) {
-        char type = msg.charAt(msg.length() - 1);
-        double startmoney = Double.parseDouble(msg.substring(0, msg.length() - 1));
-        long money = switch (type) {
-            case 'K' -> Math.round(startmoney * 1000);
-            case 'M' -> Math.round(startmoney * 1000000);
-            case 'B' -> Math.round(startmoney * 1000000000);
-            case 'T' -> Math.round(startmoney * 1000000000000L);
-            default -> Math.round(startmoney);
-        };
+        try {
+            char type = msg.charAt(msg.length() - 1);
+            double startmoney = Double.parseDouble(msg.substring(0, msg.length() - 1));
+            long money = switch (type) {
+                case 'K' -> Math.round(startmoney * 1000);
+                case 'M' -> Math.round(startmoney * 1000000);
+                case 'B' -> Math.round(startmoney * 1000000000);
+                case 'T' -> Math.round(startmoney * 1000000000000L);
+                default -> Math.round(startmoney);
+            };
 
-        return money;
+            return money;
+        } catch(Exception e) {
+            return 0;
+        }
     }
 
     public static String convertTo(long msg) {
